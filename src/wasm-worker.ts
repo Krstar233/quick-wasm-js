@@ -6,11 +6,13 @@ let loaded = false;
 export type CmdMessage =
     initCmdMsg |
     callCmdMsg |
-    getKeysCmdMsg;
+    getKeysCmdMsg |
+    createHeapCmdMsg |
+    freeHeapCmdMsg;
 
 interface initCmdMsg {
     cmd: "load",
-    args: [string]
+    args: [string, string?]
 }
 
 interface callCmdMsg {
@@ -23,6 +25,16 @@ interface callCmdMsg {
 
 interface getKeysCmdMsg {
     cmd: "getKeys"
+}
+
+interface createHeapCmdMsg {
+    cmd: "createHeap"
+    args: [Int8Array]
+}
+
+interface freeHeapCmdMsg {
+    cmd: "freeHeap"
+    args: [number]
 }
 
 registerPromiseWorker(async (msg: CmdMessage) => {
@@ -39,8 +51,12 @@ registerPromiseWorker(async (msg: CmdMessage) => {
             }
             const { args } = msg as initCmdMsg;
             const assetsUrl = args[0];
+            const wasmUrl = args[1];
             (self as any).Module = {
                 locateFile: (path: string) => {
+                    if (path.endsWith("wasm") && wasmUrl) {
+                        return wasmUrl;
+                    }
                     return path;
                 },
                 onRuntimeInitialized: () => {
@@ -52,6 +68,7 @@ registerPromiseWorker(async (msg: CmdMessage) => {
                 await new Promise<void>(res=>{
                     Module.onRuntimeInitialized = () => res();
                 });
+                loaded = true;
             }
             return true;
         }
@@ -60,7 +77,21 @@ registerPromiseWorker(async (msg: CmdMessage) => {
             const { args } = msg as callCmdMsg;
             const funcName = args[0];
             const funcArgs = args[1];
-            return Module["_"+funcName](...funcArgs) || true;
+            const ptrShouldFree: number[] = [];
+            const newArgs = funcArgs.map(arg => {
+                if (typeof arg === "string") {
+                    const strPtr = Module._malloc(arg.length*2);
+                    Module.stringToUTF8(arg, strPtr, arg.length*2);
+                    ptrShouldFree.push(strPtr);
+                    return strPtr;
+                }
+                return arg;
+            })
+            const res = Module["_"+funcName](...newArgs) || true;
+            ptrShouldFree.forEach(ptr => {
+                Module._free(ptr);
+            });
+            return res;
         }
         case "getKeys": {
             loadCheck();
@@ -71,6 +102,21 @@ registerPromiseWorker(async (msg: CmdMessage) => {
                 }
             }
             return res;
+        }
+        case "createHeap": {
+            loadCheck();
+            const { args } = msg as createHeapCmdMsg;
+            const data = args[0];
+            const ptr = Module._malloc(data.byteLength);
+            Module.writeArrayToMemory(data, ptr);
+            return ptr;
+        }
+        case "freeHeap": {
+            loadCheck();
+            const { args } = msg as freeHeapCmdMsg;
+            const ptr = args[0];
+            Module._free(ptr);
+            return true;
         }
         default: {
             throw new Error("Unknown Message.");

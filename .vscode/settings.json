@@ -1,0 +1,9 @@
+{
+    "C_Cpp.errorSquiggles": "disabled",
+    "files.associations": {
+        "regex": "cpp",
+        "sstream": "cpp",
+        "strstream": "cpp",
+        "cmath": "cpp"
+    }
+}

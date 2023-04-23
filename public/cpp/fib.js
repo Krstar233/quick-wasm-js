@@ -447,7 +447,7 @@ assert(INITIAL_MEMORY % 65536 === 0);
 // include: runtime_init_table.js
 // In RELOCATABLE mode we create the table in JS.
 var wasmTable = new WebAssembly.Table({
-  'initial': 1,
+  'initial': 6,
   'element': 'anyfunc'
 });
 
@@ -1284,7 +1284,7 @@ var ASM_CONSTS = {
   
   
   
-  var ___heap_base = 67088;
+  var ___heap_base = 69040;
   
   function zeroMemory(address, size) {
       HEAPU8.fill(0, address, address + size);
@@ -2093,13 +2093,18 @@ var ASM_CONSTS = {
 
   var ___memory_base = new WebAssembly.Global({'value': 'i32', 'mutable': false}, 1024);
 
-  var ___stack_high = 67088;
+  var ___stack_high = 69040;
 
-  var ___stack_low = 1552;
+  var ___stack_low = 3504;
 
-  var ___stack_pointer = new WebAssembly.Global({'value': 'i32', 'mutable': true}, 67088);
+  var ___stack_pointer = new WebAssembly.Global({'value': 'i32', 'mutable': true}, 69040);
 
   var ___table_base = new WebAssembly.Global({'value': 'i32', 'mutable': false}, 1);
+
+  function _emscripten_memcpy_big(dest, src, num) {
+      HEAPU8.copyWithin(dest, src, src + num);
+    }
+  _emscripten_memcpy_big.sig = 'vppp';
 
   function getHeapMax() {
       return HEAPU8.length;
@@ -2115,6 +2120,22 @@ var ASM_CONSTS = {
     }
   _emscripten_resize_heap.sig = 'ip';
 
+  /** @param {number=} offset */
+  function doWritev(stream, iov, iovcnt, offset) {
+      var ret = 0;
+      for (var i = 0; i < iovcnt; i++) {
+        var ptr = HEAPU32[((iov)>>2)];
+        var len = HEAPU32[(((iov)+(4))>>2)];
+        iov += 8;
+        var curr = FS.write(stream, HEAP8,ptr, len, offset);
+        if (curr < 0) return -1;
+        ret += curr;
+        if (typeof offset !== 'undefined') {
+          offset += curr;
+        }
+      }
+      return ret;
+    }
   
   var PATH = {isAbs:(path) => path.charAt(0) === '/',splitPath:(filename) => {
         var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
@@ -4410,6 +4431,21 @@ var ASM_CONSTS = {
         if (!stream) throw new FS.ErrnoError(8);
         return stream;
       }};
+  function _fd_write(fd, iov, iovcnt, pnum) {
+  try {
+  
+      var stream = SYSCALLS.getStreamFromFD(fd);
+      var num = doWritev(stream, iov, iovcnt);
+      HEAPU32[((pnum)>>2)] = num;
+      return 0;
+    } catch (e) {
+    if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
+    return e.errno;
+  }
+  }
+  _fd_write.sig = 'iippp';
+
+  
   function _proc_exit(code) {
       EXITSTATUS = code;
       if (!keepRuntimeAlive()) {
@@ -4462,6 +4498,13 @@ var ASM_CONSTS = {
       var ret = stackAlloc(size);
       stringToUTF8(str, ret, size);
       return ret;
+    }
+
+
+
+  function writeArrayToMemory(array, buffer) {
+      assert(array.length >= 0, 'writeArrayToMemory array must have a length (should be an array or typed array)')
+      HEAP8.set(array, buffer);
     }
 
   var FSNode = /** @constructor */ function(parent, name, mode, rdev) {
@@ -4644,7 +4687,9 @@ var wasmImports = {
   "__stack_low": ___stack_low,
   "__stack_pointer": ___stack_pointer,
   "__table_base": ___table_base,
+  "emscripten_memcpy_big": _emscripten_memcpy_big,
   "emscripten_resize_heap": _emscripten_resize_heap,
+  "fd_write": _fd_write,
   "memory": wasmMemory
 };
 var asm = createWasm();
@@ -4655,13 +4700,31 @@ var ___wasm_apply_data_relocs = Module["___wasm_apply_data_relocs"] = createExpo
 /** @type {function(...*):?} */
 var _fib = Module["_fib"] = createExportWrapper("fib");
 /** @type {function(...*):?} */
+var _greet = Module["_greet"] = createExportWrapper("greet");
+/** @type {function(...*):?} */
+var _printInt8Array = Module["_printInt8Array"] = createExportWrapper("printInt8Array");
+/** @type {function(...*):?} */
+var _printInt16Array = Module["_printInt16Array"] = createExportWrapper("printInt16Array");
+/** @type {function(...*):?} */
+var _printInt32Array = Module["_printInt32Array"] = createExportWrapper("printInt32Array");
+/** @type {function(...*):?} */
+var _printFloat32Array = Module["_printFloat32Array"] = createExportWrapper("printFloat32Array");
+/** @type {function(...*):?} */
+var _printFloat64Array = Module["_printFloat64Array"] = createExportWrapper("printFloat64Array");
+/** @type {function(...*):?} */
+var _printUInt8Array = Module["_printUInt8Array"] = createExportWrapper("printUInt8Array");
+/** @type {function(...*):?} */
+var _printUInt16Array = Module["_printUInt16Array"] = createExportWrapper("printUInt16Array");
+/** @type {function(...*):?} */
+var _printUInt32Array = Module["_printUInt32Array"] = createExportWrapper("printUInt32Array");
+/** @type {function(...*):?} */
 var ___errno_location = createExportWrapper("__errno_location");
 /** @type {function(...*):?} */
 var _fflush = Module["_fflush"] = createExportWrapper("fflush");
 /** @type {function(...*):?} */
-var _malloc = createExportWrapper("malloc");
+var _malloc = Module["_malloc"] = createExportWrapper("malloc");
 /** @type {function(...*):?} */
-var _free = createExportWrapper("free");
+var _free = Module["_free"] = createExportWrapper("free");
 /** @type {function(...*):?} */
 var _setThrew = createExportWrapper("setThrew");
 /** @type {function(...*):?} */
@@ -4695,11 +4758,16 @@ var _emscripten_stack_get_current = function() {
   return (_emscripten_stack_get_current = Module["asm"]["emscripten_stack_get_current"]).apply(null, arguments);
 };
 
+/** @type {function(...*):?} */
+var dynCall_jiji = Module["dynCall_jiji"] = createExportWrapper("dynCall_jiji");
 
 
 // include: postamble.js
 // === Auto-generated postamble setup entry stuff ===
 
+Module["UTF8ToString"] = UTF8ToString;
+Module["stringToUTF8"] = stringToUTF8;
+Module["writeArrayToMemory"] = writeArrayToMemory;
 var missingLibrarySymbols = [
   'emscripten_realloc_buffer',
   'isLeapYear',
@@ -4768,7 +4836,6 @@ var missingLibrarySymbols = [
   'stringToUTF32',
   'lengthBytesUTF32',
   'stringToNewUTF8',
-  'writeArrayToMemory',
   'getSocketFromFD',
   'getSocketAddress',
   'registerKeyEventCallback',
@@ -4818,7 +4885,6 @@ var missingLibrarySymbols = [
   'getEnvStrings',
   'checkWasiClock',
   'doReadv',
-  'doWritev',
   'wasiRightsToMuslOFlags',
   'wasiOFlagsToMuslOFlags',
   'dlopenInternal',
@@ -4938,9 +5004,7 @@ var unexportedSymbols = [
   'PATH_FS',
   'UTF8Decoder',
   'UTF8ArrayToString',
-  'UTF8ToString',
   'stringToUTF8Array',
-  'stringToUTF8',
   'lengthBytesUTF8',
   'intArrayFromString',
   'UTF16Decoder',
@@ -4953,6 +5017,7 @@ var unexportedSymbols = [
   'demangle',
   'demangleAll',
   'ExitStatus',
+  'doWritev',
   'isSymbolDefined',
   'GOT',
   'currentModuleWeakSymbols',
@@ -5038,7 +5103,7 @@ function stackCheckInit() {
   // This is normally called automatically during __wasm_call_ctors but need to
   // get these values before even running any of the ctors so we call it redundantly
   // here.
-  _emscripten_stack_set_limits(67088 , 1552);
+  _emscripten_stack_set_limits(69040 , 3504);
   // TODO(sbc): Move writeStackCookie to native to to avoid this.
   writeStackCookie();
 }
