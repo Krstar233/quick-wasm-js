@@ -8,7 +8,8 @@ export type CmdMessage =
     callCmdMsg |
     getKeysCmdMsg |
     createHeapCmdMsg |
-    freeHeapCmdMsg;
+    freeHeapCmdMsg |
+    getHeapCmdMsg;
 
 interface initCmdMsg {
     cmd: "load",
@@ -35,6 +36,11 @@ interface createHeapCmdMsg {
 interface freeHeapCmdMsg {
     cmd: "freeHeap"
     args: [number]
+}
+
+interface getHeapCmdMsg {
+    cmd: "getHeap"
+    args: [number, number]
 }
 
 registerPromiseWorker(async (msg: CmdMessage) => {
@@ -117,6 +123,13 @@ registerPromiseWorker(async (msg: CmdMessage) => {
             const ptr = args[0];
             Module._free(ptr);
             return true;
+        }
+        case "getHeap": {
+            loadCheck();
+            const { args } = msg as getHeapCmdMsg;
+            const ptr = args[0];
+            const bytes = args[1];
+            return new Int8Array(Module.HEAP8.subarray(ptr, ptr + bytes));
         }
         default: {
             throw new Error("Unknown Message.");

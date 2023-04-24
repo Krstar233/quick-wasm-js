@@ -1,0 +1,1 @@
+D:\lib\emsdk\upstream\emscripten\em++.bat -Os -sWASM=1 -s EXPORTED_FUNCTIONS=['_malloc','_free'] -s EXPORTED_RUNTIME_METHODS=['UTF8ToString','stringToUTF8','writeArrayToMemory'] --no-entry @CMakeFiles\fib.dir\objects1 -o fib.js 

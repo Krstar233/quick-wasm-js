@@ -1,6 +1,9 @@
 #include <emscripten.h>
 #include <stdio.h>
 #include <string>
+#include <cstdlib>
+#include <ctime>
+
 extern "C" {
 
 EMSCRIPTEN_KEEPALIVE
@@ -81,6 +84,18 @@ void printUInt32Array(uint32_t* ptr, int len) {
     printf("%u ", ptr[i]);
   }
   printf("\n");
+}
+
+EMSCRIPTEN_KEEPALIVE
+float* mockRandom(int len) {
+  time_t now;
+  time(&now);
+  srand(now);
+  float* ptr = (float*) malloc(sizeof(float)*len);
+  for (int i = 0; i < len; i++) {
+    ptr[i] = (rand() % 1000) / 10.0;
+  }
+  return ptr;
 }
 
 }

@@ -1,7 +1,7 @@
 import {WebAssemblyWorkerBuilder} from "../src/index"
 
 window.onload = async () => {
-    const fibManager = await new WebAssemblyWorkerBuilder("./cpp/fib.js", "./cpp/fib.wasm").buildManager();
+    const fibManager = await new WebAssemblyWorkerBuilder("./cpp/build.em/fib.js", "./cpp/build.em/fib.wasm").buildManager();
     console.log(await fibManager.fib(12));
     await fibManager.greet("hello")
     let ptr = await fibManager.createHEAP8(new Int8Array([1,2,3]));
@@ -31,5 +31,7 @@ window.onload = async () => {
     ptr = await fibManager.createHEAP(new Int8Array([1,2,3]).buffer);
     await fibManager.printInt8Array(ptr, 3);
     await fibManager.freeHEAP(ptr);
-    
+    ptr = await fibManager.mockRandom(10);
+    const heap = await fibManager.getHEAPF32(ptr, 10);
+    console.log(heap);
 }

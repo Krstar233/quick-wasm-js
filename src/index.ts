@@ -55,7 +55,43 @@ export class WebAssemblyWorkerBuilder {
             freeHEAP: async (ptr: number): Promise<boolean> => {
                 msg = { cmd: "freeHeap", args: [ptr]}
                 return await this._promiseWorker.postMessage(msg);
-            }
+            },
+            getHEAP: async (ptr: number, bytes: number): Promise<Int8Array> => {
+                msg = { cmd: "getHeap", args: [ptr, bytes]}
+                return await this._promiseWorker.postMessage(msg);
+            },
+            getHEAP8: async (ptr: number, len: number): Promise<Int8Array> => {
+                msg = { cmd: "getHeap", args: [ptr, len]}
+                return await this._promiseWorker.postMessage(msg);
+            },
+            getHEAP16: async (ptr: number, len: number): Promise<Int16Array> => {
+                msg = { cmd: "getHeap", args: [ptr, len * 2]}
+                return new Int16Array((await this._promiseWorker.postMessage(msg)).buffer);
+            },
+            getHEAP32: async (ptr: number, len: number): Promise<Int32Array> => {
+                msg = { cmd: "getHeap", args: [ptr, len * 4]}
+                return new Int32Array((await this._promiseWorker.postMessage(msg)).buffer);
+            },
+            getHEAPF32: async (ptr: number, len: number): Promise<Float32Array> => {
+                msg = { cmd: "getHeap", args: [ptr, len * 4]}
+                return new Float32Array((await this._promiseWorker.postMessage(msg)).buffer);
+            },
+            getHEAPF64: async (ptr: number, len: number): Promise<Float64Array> => {
+                msg = { cmd: "getHeap", args: [ptr, len * 8]}
+                return new Float64Array((await this._promiseWorker.postMessage(msg)).buffer);
+            },
+            getHEAPU8: async (ptr: number, len: number): Promise<Uint8Array> => {
+                msg = { cmd: "getHeap", args: [ptr, len]}
+                return new Uint8Array((await this._promiseWorker.postMessage(msg)).buffer);
+            },
+            getHEAPU16: async (ptr: number, len: number): Promise<Uint16Array> => {
+                msg = { cmd: "getHeap", args: [ptr, len * 2]}
+                return new Uint16Array((await this._promiseWorker.postMessage(msg)).buffer);
+            },
+            getHEAPU32: async (ptr: number, len: number): Promise<Uint32Array> => {
+                msg = { cmd: "getHeap", args: [ptr, len * 4]}
+                return new Uint32Array((await this._promiseWorker.postMessage(msg)).buffer);
+            },
         };
         msg = { cmd: "load", args: [this._moduleUrl, this._wasmUrl]}
         await this._promiseWorker.postMessage(msg);
