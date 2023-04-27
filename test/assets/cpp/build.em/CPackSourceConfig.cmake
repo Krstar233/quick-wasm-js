@@ -32,7 +32,7 @@ set(CPACK_IGNORE_FILES "/CVS/;/\\.svn/;/\\.bzr/;/\\.hg/;/\\.git/;\\.swp\$;\\.#;/
 set(CPACK_INSTALLED_DIRECTORIES "D:/project/wasm-sdk/test/assets/cpp;/")
 set(CPACK_INSTALL_CMAKE_PROJECTS "")
 set(CPACK_INSTALL_PREFIX "D:/lib/emsdk/upstream/emscripten/cache/sysroot")
-set(CPACK_MODULE_PATH "D:/lib/emsdk/upstream/emscripten/cmake/Modules;D:/lib/emsdk/upstream/emscripten/cmake/Modules;D:/lib/emsdk/upstream/emscripten/cmake/Modules;D:/lib/emsdk/upstream/emscripten/cmake/Modules;D:/lib/emsdk/upstream/emscripten/cmake/Modules")
+set(CPACK_MODULE_PATH "D:/lib/emsdk/upstream/emscripten/cmake/Modules;D:/lib/emsdk/upstream/emscripten/cmake/Modules;D:/lib/emsdk/upstream/emscripten/cmake/Modules;D:/lib/emsdk/upstream/emscripten/cmake/Modules")
 set(CPACK_NSIS_DISPLAY_NAME "fib 0.1.0")
 set(CPACK_NSIS_INSTALLER_ICON_CODE "")
 set(CPACK_NSIS_INSTALLER_MUI_ICON_CODE "")
