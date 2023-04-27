@@ -21,8 +21,7 @@ config.plugins = [
         host: '0.0.0.0',
         root: 'test',
         file: 'index.html',
-        open: true,
-        wait: 500,
+        open: true
     })
 ];
 
