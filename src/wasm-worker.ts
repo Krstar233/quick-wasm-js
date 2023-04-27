@@ -114,7 +114,7 @@ registerPromiseWorker(async (msg: CmdMessage) => {
             const { args } = msg as createHeapCmdMsg;
             const data = args[0];
             const ptr = Module._malloc(data.byteLength);
-            Module.writeArrayToMemory(data, ptr);
+            Module.HEAP8.set(data, ptr)
             return ptr;
         }
         case "freeHeap": {
