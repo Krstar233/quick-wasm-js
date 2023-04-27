@@ -527,7 +527,7 @@
         return QuickWebAssemblyFactory;
     }());
 
-    var require_context_module_1_0 = spec("QuickWebAssemblyFactory test", function() {
+    var require_context_module_0_0 = spec("QuickWebAssemblyFactory test", function() {
         let fibManager;
         beforeAll(async done => {
             fibManager = await new QuickWebAssemblyFactory().createManager(`${TEST_CONFIG.assetsPath}/fib.js`, `${TEST_CONFIG.assetsPath}/fib.wasm`);
@@ -967,7 +967,7 @@
     });
     var dist_1 = dist.QuickWebAssemblyFactory;
 
-    var require_context_module_1_1 = spec("npm link test", function() {
+    var require_context_module_0_1 = spec("npm link test", function() {
         let fibManager;
         beforeAll(async done => {
             fibManager = await new dist_1().createManager(`${TEST_CONFIG.assetsPath}/fib.js`, `${TEST_CONFIG.assetsPath}/fib.wasm`);
@@ -979,7 +979,7 @@
         });
     });
 
-    var require_context_module_1_2 = spec("spec util self test", function() {
+    var require_context_module_0_2 = spec("spec util self test", function() {
       let beforeAllCount = 0;
       let afterAllCount = 0;
       let itCount = 0;
@@ -1028,7 +1028,7 @@
         return TestClass;
     }());
 
-    var require_context_module_1_3 = spec("test-class", function() {
+    var require_context_module_0_3 = spec("test-class", function() {
       let testObj;
       beforeAll(done => {
         testObj = new TestClass("123");
@@ -1062,10 +1062,10 @@
     const files =
       (function() {
         var map = {
-          './basic.spec.js': require_context_module_1_0,
-    './npm-link.spec.js': require_context_module_1_1,
-    './self.spec.js': require_context_module_1_2,
-    './test-class.spec.js': require_context_module_1_3,
+          './basic.spec.js': require_context_module_0_0,
+    './npm-link.spec.js': require_context_module_0_1,
+    './self.spec.js': require_context_module_0_2,
+    './test-class.spec.js': require_context_module_0_3,
         };
         var req = function req(key) {
           return map[key] || (function() { throw new Error("Cannot find module '" + key + "'.") }());
