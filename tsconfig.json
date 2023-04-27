@@ -4,14 +4,17 @@
     "noImplicitAny": true,
     "lib": ["DOM", "ES2015", "WebWorker"],
     "module": "es2020",
-    "target": "es5",
+    "target": "ES5",
+    "importHelpers": true,
     "allowJs": true,
     "moduleResolution": "node",
     "rootDir": ".",
+    "declaration": true
   },
   "include": [
-    "src/**/*.ts",
-    "test/**/*.ts"
+    "src/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -1,7 +1,7 @@
-import {WebAssemblyWorkerBuilder} from "../src/index"
+import { QuickWebAssemblyFactory } from "../src/index"
 
 window.onload = async () => {
-    const fibManager = await new WebAssemblyWorkerBuilder("./cpp/build.em/fib.js", "./cpp/build.em/fib.wasm").buildManager();
+    const fibManager = await new QuickWebAssemblyFactory().createManager("./cpp/build.em/fib.js", "./cpp/build.em/fib.wasm");
     console.log(await fibManager.fib(12));
     await fibManager.greet("hello")
     let ptr = await fibManager.createHEAP8(new Int8Array([1,2,3]));

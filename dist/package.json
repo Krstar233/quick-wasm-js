@@ -1,0 +1,10 @@
+{
+  "name": "quick-wasm-js",
+  "version": "1.0.0",
+  "description": "A quick webassembly tool",
+  "main": "index.js",
+  "types": "./src/index.d.ts",
+  "keywords": ["WebAssembly"],
+  "author": "kr_star",
+  "license": "ISC"
+}
