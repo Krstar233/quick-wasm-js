@@ -1,10 +1,10 @@
 # Quick WebAssembly JS
 
-快速创建 WebAssembly 代理工具类. 
+快速封装 WebAssembly 的工具类. 
 
 ## 介绍
 
-一个可以快速创建 WebAssembly 代理工具类. 
+一个可以快速封装 WebAssembly 的代理工具类. 
 
 ## 快速开始
 
