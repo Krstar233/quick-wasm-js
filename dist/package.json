@@ -1,6 +1,6 @@
 {
   "name": "quick-wasm-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A quick webassembly tool",
   "main": "index.js",
   "types": "./src/index.d.ts",

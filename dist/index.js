@@ -157,23 +157,16 @@
     /* eslint-enable */
 
     /**
-     * @class QuickWebAssemblyFactory
+     * 构建 WebAssembly 代理对象的工厂类
      */
     var QuickWebAssemblyFactory = /** @class */ (function () {
         function QuickWebAssemblyFactory() {
         }
         /**
-         *
-         * @returns {string} Hello
-         */
-        QuickWebAssemblyFactory.prototype.greet = function () {
-            return "hello world";
-        };
-        /**
-         * CreateManager
-         * @param moduleUrl moduleUrl
-         * @param wasmUrl wasmUrl
-         * @returns Object
+         * 传入 WebAssembly 资源, 构建代理对象
+         * @param moduleUrl 由 Emscripten 编译的 JS 文件资源路径, 如果是相对路径则会相对于当前页面的 location 请求资源
+         * @param wasmUrl 由 Emscripten 编译的 WebAssembly(.wasm) 文件资源路径, 如果是相对路径则会相对于当前页面的 location 请求资源
+         * @returns
          */
         QuickWebAssemblyFactory.prototype.createManager = function (moduleUrl, wasmUrl) {
             return __awaiter(this, void 0, void 0, function () {
