@@ -29,6 +29,6 @@ export default [{
                 'quick-wasm-js': ['QuickWebAssemblyFactory']
             }
         }),
-        typescript({ typescript: require('typescript')})
+        typescript({ typescript: require('typescript')}),
     ]
 }]

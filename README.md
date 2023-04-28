@@ -1,10 +1,10 @@
 # Quick WebAssembly JS
 
-快速创建 WebAssembly 代理对象的工具类. 
+快速创建 WebAssembly 代理工具类. 
 
 ## 介绍
 
-一个可以快速创建 WebAssembly 代理对象的工具类. 
+一个可以快速创建 WebAssembly 代理工具类. 
 
 ## 快速开始
 
@@ -36,14 +36,14 @@
    在使用 Emscripten 编译时, 需要注意添加必要的编译选项:
 
    ```bash
-      -sWASM=1 -sMAIN_MODULE=2 -sEXPORTED_FUNCTIONS=['_malloc','_free'] -sEXPORTED_RUNTIME_METHODS=['UTF8ToString','stringToUTF8'] --no-entry
+   -sWASM=1 -sMAIN_MODULE=2 -sEXPORTED_FUNCTIONS=['_malloc','_free'] -sEXPORTED_RUNTIME_METHODS=['UTF8ToString','stringToUTF8'] --no-entry
    ```
 
    使用 Emscripten 编译您的资源. 
    
    示例编译指令:
    ```
-   emcc fib.cc -sWASM=1 -sMAIN_MODULE=2 -sEXPORTED_FUNCTIONS=['_malloc','_free'] -sEXPORTED_RUNTIME_METHODS=['UTF8ToString','stringToUTF8'] -o fib.js
+   emcc fib.cc -sWASM=1 -sMAIN_MODULE=2 -sEXPORTED_FUNCTIONS=['_malloc','_free'] -sEXPORTED_RUNTIME_METHODS=['UTF8ToString','stringToUTF8'] --no-entry -o fib.js
    ```
 
 
@@ -67,7 +67,7 @@
 
 ### 相关 API
 
-生成的代理对象有固定几个 API 方便针对 WebAssembly 的内存进行操作.
+生成的代理对象有固定几个 API 方便对 WebAssembly 的内存进行操作.
 
 - **createHEAP(data: ArrayBuffer): Promise\<number\>**
 
@@ -78,8 +78,8 @@
 
    传入堆的指针, 释放内存.
 
-- **getHEAP(ptr: number, bytes: number): Promise\<Int8Array>**
+- **getHEAP(ptr: number, bytes: number): Promise\<ArrayBuffer>**
    
-   传入指针和字节数, 获取相应的堆数据以 Int8Array 返回.
+   传入指针和字节数, 获取相应的堆数据以 ArrayBuffer 返回.
 
-...
+更多API 访问: [quick-wasm-js API 文档](modules.html)

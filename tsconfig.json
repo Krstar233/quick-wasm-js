@@ -9,12 +9,21 @@
     "allowJs": true,
     "moduleResolution": "node",
     "rootDir": ".",
-    "declaration": true
-  },
+    "declaration": true,
+    "skipLibCheck": true,
+  },  
   "include": [
     "src/**/*.ts"
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "typedocOptions": {
+    "entryPoints": ["src/index.ts"],
+    "out": "docs",
+    "includeVersion": false,
+    "disableSources": false,
+    "includes": ["src/**/*.ts"],
+    "exclude": ["node_modules"],
+  }
 }

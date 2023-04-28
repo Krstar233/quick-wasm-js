@@ -393,7 +393,7 @@
                                             case 0:
                                                 msg = { cmd: "getHeap", args: [ptr, bytes] };
                                                 return [4 /*yield*/, promiseWorker$1.postMessage(msg)];
-                                            case 1: return [2 /*return*/, _a.sent()];
+                                            case 1: return [2 /*return*/, (_a.sent()).buffer];
                                         }
                                     });
                                 }); },
@@ -562,6 +562,10 @@
             await fibManager.freeHEAP(ptr);
             ptr = await fibManager.createHEAP(new Int8Array([1,2,3]).buffer);
             await fibManager.printInt8Array(ptr, 3);
+            const buffer = await fibManager.getHEAP(ptr, 3);
+            chai_1(buffer instanceof ArrayBuffer).ok;
+            const getInt8 = new Int8Array(buffer);
+            chai_1(getInt8[0]+getInt8[1]+getInt8[2]).eq(6);
             await fibManager.freeHEAP(ptr);
             ptr = await fibManager.mockRandom(10);
             const heap = await fibManager.getHEAPF32(ptr, 10);
