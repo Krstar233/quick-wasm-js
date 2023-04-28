@@ -67,7 +67,7 @@
 
 ### 相关 API
 
-生成的代理对象有固定几个 API 方便对 WebAssembly 的内存进行操作.
+生成的代理对象已经提供几个 API 方便对 WebAssembly 的内存进行操作.
 
 - **createHEAP(data: ArrayBuffer): Promise\<number\>**
 
