@@ -82,4 +82,4 @@
    
    传入指针和字节数, 获取相应的堆数据以 ArrayBuffer 返回.
 
-更多API 访问: [quick-wasm-js API 文档](modules.html)
+更多API 访问: [quick-wasm-js API 文档](https://krstar233.github.io/quick-wasm-js/)
