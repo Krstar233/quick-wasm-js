@@ -26,7 +26,8 @@ export default [{
         commonjs({
             namedExports: {
                 'chai': ['expect'],
-                'quick-wasm-js': ['QuickWebAssemblyFactory']
+                'quick-wasm-js': ['QuickWebAssemblyFactory'],
+                "simp-spec": ["it", "spec", "runTests", "beforeAll", "afterAll", "beforeEach", "afterEach"]
             }
         }),
         typescript({ typescript: require('typescript')}),

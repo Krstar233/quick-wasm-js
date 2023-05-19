@@ -1,4 +1,4 @@
-import { spec, it, runTests, beforeAll, afterAll } from "./spec-container";
+import { spec, it, runTests, beforeAll, afterAll } from "simp-spec";
 //@ts-ignore
 import { config } from "./spec.config";
 //@ts-ignore

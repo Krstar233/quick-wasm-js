@@ -1,7 +1,6 @@
 import { expect, it, spec, beforeAll, TEST_CONFIG } from "../common";
 import { QuickWebAssemblyFactory } from "../../src/index"
 
-
 export default spec("QuickWebAssemblyFactory test", function() {
     let fibManager;
     beforeAll(async done => {

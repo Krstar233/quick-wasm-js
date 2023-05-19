@@ -40,148 +40,278 @@
         }
     }
 
-    var specsMap = {};
-    var buildingTitle = "Kr_Test";
-    var beforeAllLabel = "__Kr_Test__beforeAll";
-    var afterAllLabel = "__Kr_Test__afterAll";
-    function it(title, fn) {
-        if (!specsMap[buildingTitle]) {
-            specsMap[buildingTitle] = {};
-        }
-        if (specsMap[buildingTitle][title]) {
-            throw new Error("case: ".concat(title, " has existed!"));
-        }
-        specsMap[buildingTitle][title] = function () {
-            return new Promise(function (res) {
-                fn(res);
+    var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+    function unwrapExports (x) {
+    	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+    }
+
+    function createCommonjsModule(fn, module) {
+    	return module = { exports: {} }, fn(module, module.exports), module.exports;
+    }
+
+    function getCjsExportFromNamespace (n) {
+    	return n && n['default'] || n;
+    }
+
+    var simpSpec = createCommonjsModule(function (module, exports) {
+    (function (global, factory) {
+        factory(exports) ;
+    })(commonjsGlobal, (function (exports) {    function __awaiter(thisArg, _arguments, P, generator) {
+            function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+            return new (P || (P = Promise))(function (resolve, reject) {
+                function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+                function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+                function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+                step((generator = generator.apply(thisArg, _arguments || [])).next());
             });
-        };
-    }
-    function beforeAll(fn) {
-        if (!specsMap[buildingTitle]) {
-            specsMap[buildingTitle] = {};
         }
-        specsMap[buildingTitle][beforeAllLabel] = function () {
-            return new Promise(function (res) {
-                fn(res);
-            });
-        };
-    }
-    function afterAll(fn) {
-        if (!specsMap[buildingTitle]) {
-            specsMap[buildingTitle] = {};
+        function __generator(thisArg, body) {
+            var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+            return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+            function verb(n) { return function (v) { return step([n, v]); }; }
+            function step(op) {
+                if (f) throw new TypeError("Generator is already executing.");
+                while (g && (g = 0, op[0] && (_ = 0)), _) try {
+                    if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                    if (y = 0, t) op = [op[0] & 2, t.value];
+                    switch (op[0]) {
+                        case 0: case 1: t = op; break;
+                        case 4: _.label++; return { value: op[1], done: false };
+                        case 5: _.label++; y = op[1]; op = [0]; continue;
+                        case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                        default:
+                            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                            if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                            if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                            if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                            if (t[2]) _.ops.pop();
+                            _.trys.pop(); continue;
+                    }
+                    op = body.call(thisArg, _);
+                } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+                if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+            }
         }
-        specsMap[buildingTitle][afterAllLabel] = function () {
-            return new Promise(function (res) {
-                fn(res);
+        var specsMap = {};
+        var buildingTitle = "__SimpSpec_Test";
+        var runTaskID = 0;
+        var labelPrefix = "__SimpSpec_Test__";
+        var beforeAllLabel = labelPrefix + "beforeAll";
+        var afterAllLabel = labelPrefix + "afterAll";
+        var beforeEachLabel = labelPrefix + "beforeEach";
+        var afterEachLabel = labelPrefix + "afterEach";
+        var labelMap = {
+            beforeAllLabel: beforeAllLabel,
+            afterAllLabel: afterAllLabel,
+            beforeEachLabel: beforeEachLabel,
+            afterEachLabel: afterEachLabel
+        };
+        var getRunTask = function () {
+            if (!specsMap[runTaskID]) {
+                specsMap[runTaskID] = {};
+            }
+            if (!specsMap[runTaskID][buildingTitle]) {
+                specsMap[runTaskID][buildingTitle] = {};
+            }
+            return specsMap[runTaskID];
+        };
+        function it(title, fn) {
+            var runTask = getRunTask();
+            if (runTask[buildingTitle][title]) {
+                throw new Error("case: ".concat(title, " has existed!"));
+            }
+            runTask[buildingTitle][title] = function () {
+                return new Promise(function (res) {
+                    fn(res);
+                });
+            };
+        }
+        function beforeAll(fn) {
+            var runTask = getRunTask();
+            runTask[buildingTitle][beforeAllLabel] = function () {
+                return new Promise(function (res) {
+                    fn(res);
+                });
+            };
+        }
+        function afterAll(fn) {
+            var runTask = getRunTask();
+            runTask[buildingTitle][afterAllLabel] = function () {
+                return new Promise(function (res) {
+                    fn(res);
+                });
+            };
+        }
+        function beforeEach(fn) {
+            var runTask = getRunTask();
+            runTask[buildingTitle][beforeEachLabel] = function () {
+                return new Promise(function (res) {
+                    fn(res);
+                });
+            };
+        }
+        function afterEach(fn) {
+            var runTask = getRunTask();
+            runTask[buildingTitle][afterEachLabel] = function () {
+                return new Promise(function (res) {
+                    fn(res);
+                });
+            };
+        }
+        function spec(title, fn) {
+            return function () {
+                buildingTitle = title;
+                fn();
+            };
+        }
+        function runTests(specs) {
+            var _this = this;
+            var thisRunTaskID = ++runTaskID;
+            specs.forEach(function (item) {
+                item();
             });
-        };
-    }
-    function spec(title, builder) {
-        return function () {
-            buildingTitle = title;
-            builder();
-        };
-    }
-    function runTests() {
-        var _this = this;
-        return new Promise(function (res, rej) { return __awaiter(_this, void 0, void 0, function () {
-            var passCount, specKey, itKey, successResult, failResult, printPassMsg, _a, _b, _c, _i, _d, _e, _f, _g, err_1;
-            return __generator(this, function (_h) {
-                switch (_h.label) {
-                    case 0:
-                        passCount = 0;
-                        successResult = function () {
-                            return {
-                                success: true,
-                                passCount: passCount,
-                                errMsg: "ALL SPECS PASS!"
+            var runTask = getRunTask();
+            return new Promise(function (res, rej) { return __awaiter(_this, void 0, void 0, function () {
+                var passCount, specKey, itKey, successResult, failResult, printPassMsg, _a, _b, _c, _i, specItem, _d, _e, _f, _g, tmpItKey, tmpItKey, err_1;
+                return __generator(this, function (_h) {
+                    switch (_h.label) {
+                        case 0:
+                            passCount = 0;
+                            successResult = function () {
+                                return {
+                                    success: true,
+                                    passCount: passCount,
+                                    message: "ALL TESTS PASS!"
+                                };
                             };
-                        };
-                        failResult = function (err) {
-                            return {
-                                success: false,
-                                passCount: passCount,
-                                errMsg: "[".concat(specKey, "|").concat(itKey, "] failed. reason: ").concat(err.message)
+                            failResult = function (err) {
+                                var failItKey = itKey;
+                                if (Object.values(labelMap).includes(itKey)) {
+                                    failItKey = itKey.substring(labelPrefix.length);
+                                }
+                                return {
+                                    success: false,
+                                    passCount: passCount,
+                                    message: "[".concat(specKey, "|").concat(failItKey, "] failed. reason: ").concat(err.message)
+                                };
                             };
-                        };
-                        printPassMsg = function () {
-                            console.warn("[".concat(specKey, "|").concat(itKey, "] passed."));
-                        };
-                        window.addEventListener("error", function (ev) {
-                            res(failResult(ev.error));
-                        });
-                        window.addEventListener("unhandledrejection", function (ev) {
-                            res(failResult(ev.reason));
-                        });
-                        _h.label = 1;
-                    case 1:
-                        _h.trys.push([1, 13, , 14]);
-                        _a = specsMap;
-                        _b = [];
-                        for (_c in _a)
-                            _b.push(_c);
-                        _i = 0;
-                        _h.label = 2;
-                    case 2:
-                        if (!(_i < _b.length)) return [3 /*break*/, 12];
-                        _c = _b[_i];
-                        if (!(_c in _a)) return [3 /*break*/, 11];
-                        specKey = _c;
-                        if (!specsMap[specKey][beforeAllLabel]) return [3 /*break*/, 4];
-                        return [4 /*yield*/, specsMap[specKey][beforeAllLabel]()];
-                    case 3:
-                        _h.sent();
-                        _h.label = 4;
-                    case 4:
-                        _d = specsMap[specKey];
-                        _e = [];
-                        for (_f in _d)
-                            _e.push(_f);
-                        _g = 0;
-                        _h.label = 5;
-                    case 5:
-                        if (!(_g < _e.length)) return [3 /*break*/, 8];
-                        _f = _e[_g];
-                        if (!(_f in _d)) return [3 /*break*/, 7];
-                        itKey = _f;
-                        if (itKey === beforeAllLabel || itKey === afterAllLabel) {
-                            return [3 /*break*/, 7];
-                        }
-                        return [4 /*yield*/, specsMap[specKey][itKey]()];
-                    case 6:
-                        _h.sent();
-                        passCount++;
-                        printPassMsg();
-                        delete specsMap[specKey][itKey];
-                        _h.label = 7;
-                    case 7:
-                        _g++;
-                        return [3 /*break*/, 5];
-                    case 8:
-                        if (!specsMap[specKey][afterAllLabel]) return [3 /*break*/, 10];
-                        return [4 /*yield*/, specsMap[specKey][afterAllLabel]()];
-                    case 9:
-                        _h.sent();
-                        _h.label = 10;
-                    case 10:
-                        delete specsMap[specKey];
-                        _h.label = 11;
-                    case 11:
-                        _i++;
-                        return [3 /*break*/, 2];
-                    case 12: return [3 /*break*/, 14];
-                    case 13:
-                        err_1 = _h.sent();
-                        res(failResult(err_1));
-                        return [3 /*break*/, 14];
-                    case 14:
-                        res(successResult());
-                        return [2 /*return*/];
-                }
-            });
-        }); });
-    }
+                            printPassMsg = function () {
+                                console.warn("[".concat(specKey, "|").concat(itKey, "] passed."));
+                            };
+                            window.addEventListener("error", function (ev) {
+                                res(failResult(ev.error));
+                            });
+                            window.addEventListener("unhandledrejection", function (ev) {
+                                res(failResult(ev.reason));
+                            });
+                            _h.label = 1;
+                        case 1:
+                            _h.trys.push([1, 17, , 18]);
+                            _a = runTask;
+                            _b = [];
+                            for (_c in _a)
+                                _b.push(_c);
+                            _i = 0;
+                            _h.label = 2;
+                        case 2:
+                            if (!(_i < _b.length)) return [3 , 16];
+                            _c = _b[_i];
+                            if (!(_c in _a)) return [3 , 15];
+                            specKey = _c;
+                            specItem = runTask[specKey];
+                            if (!specItem[beforeAllLabel]) return [3 , 4];
+                            return [4 , specItem[beforeAllLabel]()];
+                        case 3:
+                            _h.sent();
+                            delete specItem[beforeAllLabel];
+                            _h.label = 4;
+                        case 4:
+                            _d = specItem;
+                            _e = [];
+                            for (_f in _d)
+                                _e.push(_f);
+                            _g = 0;
+                            _h.label = 5;
+                        case 5:
+                            if (!(_g < _e.length)) return [3 , 12];
+                            _f = _e[_g];
+                            if (!(_f in _d)) return [3 , 11];
+                            itKey = _f;
+                            if (Object.values(labelMap).includes(itKey)) {
+                                return [3 , 11];
+                            }
+                            if (!specItem[beforeEachLabel]) return [3 , 7];
+                            tmpItKey = itKey;
+                            itKey = beforeEachLabel;
+                            return [4 , specItem[itKey]()];
+                        case 6:
+                            _h.sent();
+                            itKey = tmpItKey;
+                            _h.label = 7;
+                        case 7:
+                        return [4 , specItem[itKey]()];
+                        case 8:
+                            _h.sent();
+                            if (!specItem[afterEachLabel]) return [3 , 10];
+                            tmpItKey = itKey;
+                            itKey = afterEachLabel;
+                            return [4 , specItem[itKey]()];
+                        case 9:
+                            _h.sent();
+                            itKey = tmpItKey;
+                            _h.label = 10;
+                        case 10:
+                            passCount++;
+                            printPassMsg();
+                            delete specItem[itKey];
+                            _h.label = 11;
+                        case 11:
+                            _g++;
+                            return [3 , 5];
+                        case 12:
+                            if (!specItem[afterAllLabel]) return [3 , 14];
+                            return [4 , specItem[afterAllLabel]()];
+                        case 13:
+                            _h.sent();
+                            delete specItem[afterAllLabel];
+                            _h.label = 14;
+                        case 14:
+                            delete runTask[specKey];
+                            _h.label = 15;
+                        case 15:
+                            _i++;
+                            return [3 , 2];
+                        case 16: return [3 , 18];
+                        case 17:
+                            err_1 = _h.sent();
+                            delete specsMap[thisRunTaskID];
+                            res(failResult(err_1));
+                            return [3 , 18];
+                        case 18:
+                            delete specsMap[thisRunTaskID];
+                            res(successResult());
+                            return [2 ];
+                    }
+                });
+            }); });
+        }
+        exports.afterAll = afterAll;
+        exports.afterEach = afterEach;
+        exports.beforeAll = beforeAll;
+        exports.beforeEach = beforeEach;
+        exports.it = it;
+        exports.runTests = runTests;
+        exports.spec = spec;
+    }));
+    });
+    var simpSpec_1 = simpSpec.it;
+    var simpSpec_2 = simpSpec.spec;
+    var simpSpec_3 = simpSpec.runTests;
+    var simpSpec_4 = simpSpec.beforeAll;
+    var simpSpec_5 = simpSpec.afterAll;
+    simpSpec.beforeEach;
+    simpSpec.afterEach;
 
     var messageIds = 0;
     function onMessage (self, e) {
@@ -536,13 +666,13 @@
         return QuickWebAssemblyFactory;
     }());
 
-    var require_context_module_0_0 = spec("QuickWebAssemblyFactory test", function() {
+    var require_context_module_0_0 = simpSpec_2("QuickWebAssemblyFactory test", function() {
         let fibManager;
-        beforeAll(async done => {
+        simpSpec_4(async done => {
             fibManager = await new QuickWebAssemblyFactory().createManager(`${TEST_CONFIG.assetsPath}/fib.js`, `${TEST_CONFIG.assetsPath}/fib.wasm`);
             done();
         });
-        it("basic use", async done => {
+        simpSpec_1("basic use", async done => {
             chai_1(await fibManager.fib(12)).eq(233);
             await fibManager.greet("hello");
             let ptr = await fibManager.createHEAP8(new Int8Array([1,2,3]));
@@ -584,20 +714,6 @@
             done();
         });
     });
-
-    var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-    function unwrapExports (x) {
-    	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-    }
-
-    function createCommonjsModule(fn, module) {
-    	return module = { exports: {} }, fn(module, module.exports), module.exports;
-    }
-
-    function getCjsExportFromNamespace (n) {
-    	return n && n['default'] || n;
-    }
 
     var dist = createCommonjsModule(function (module, exports) {
     (function (global, factory) {
@@ -712,13 +828,10 @@
                 return new Worker(url, options);
             };
         }
-        var WorkerFactory = createBase64WorkerFactory('Lyogcm9sbHVwLXBsdWdpbi13ZWItd29ya2VyLWxvYWRlciAqLwooZnVuY3Rpb24gKCkgewogICAgJ3VzZSBzdHJpY3QnOwoKICAgIC8qKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioNCiAgICBDb3B5cmlnaHQgKGMpIE1pY3Jvc29mdCBDb3Jwb3JhdGlvbi4NCg0KICAgIFBlcm1pc3Npb24gdG8gdXNlLCBjb3B5LCBtb2RpZnksIGFuZC9vciBkaXN0cmlidXRlIHRoaXMgc29mdHdhcmUgZm9yIGFueQ0KICAgIHB1cnBvc2Ugd2l0aCBvciB3aXRob3V0IGZlZSBpcyBoZXJlYnkgZ3JhbnRlZC4NCg0KICAgIFRIRSBTT0ZUV0FSRSBJUyBQUk9WSURFRCAiQVMgSVMiIEFORCBUSEUgQVVUSE9SIERJU0NMQUlNUyBBTEwgV0FSUkFOVElFUyBXSVRIDQogICAgUkVHQVJEIFRPIFRISVMgU09GVFdBUkUgSU5DTFVESU5HIEFMTCBJTVBMSUVEIFdBUlJBTlRJRVMgT0YgTUVSQ0hBTlRBQklMSVRZDQogICAgQU5EIEZJVE5FU1MuIElOIE5PIEVWRU5UIFNIQUxMIFRIRSBBVVRIT1IgQkUgTElBQkxFIEZPUiBBTlkgU1BFQ0lBTCwgRElSRUNULA0KICAgIElORElSRUNULCBPUiBDT05TRVFVRU5USUFMIERBTUFHRVMgT1IgQU5ZIERBTUFHRVMgV0hBVFNPRVZFUiBSRVNVTFRJTkcgRlJPTQ0KICAgIExPU1MgT0YgVVNFLCBEQVRBIE9SIFBST0ZJVFMsIFdIRVRIRVIgSU4gQU4gQUNUSU9OIE9GIENPTlRSQUNULCBORUdMSUdFTkNFIE9SDQogICAgT1RIRVIgVE9SVElPVVMgQUNUSU9OLCBBUklTSU5HIE9VVCBPRiBPUiBJTiBDT05ORUNUSU9OIFdJVEggVEhFIFVTRSBPUg0KICAgIFBFUkZPUk1BTkNFIE9GIFRISVMgU09GVFdBUkUuDQogICAgKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKiogKi8NCg0KICAgIGZ1bmN0aW9uIF9fYXdhaXRlcih0aGlzQXJnLCBfYXJndW1lbnRzLCBQLCBnZW5lcmF0b3IpIHsNCiAgICAgICAgZnVuY3Rpb24gYWRvcHQodmFsdWUpIHsgcmV0dXJuIHZhbHVlIGluc3RhbmNlb2YgUCA/IHZhbHVlIDogbmV3IFAoZnVuY3Rpb24gKHJlc29sdmUpIHsgcmVzb2x2ZSh2YWx1ZSk7IH0pOyB9DQogICAgICAgIHJldHVybiBuZXcgKFAgfHwgKFAgPSBQcm9taXNlKSkoZnVuY3Rpb24gKHJlc29sdmUsIHJlamVjdCkgew0KICAgICAgICAgICAgZnVuY3Rpb24gZnVsZmlsbGVkKHZhbHVlKSB7IHRyeSB7IHN0ZXAoZ2VuZXJhdG9yLm5leHQodmFsdWUpKTsgfSBjYXRjaCAoZSkgeyByZWplY3QoZSk7IH0gfQ0KICAgICAgICAgICAgZnVuY3Rpb24gcmVqZWN0ZWQodmFsdWUpIHsgdHJ5IHsgc3RlcChnZW5lcmF0b3JbInRocm93Il0odmFsdWUpKTsgfSBjYXRjaCAoZSkgeyByZWplY3QoZSk7IH0gfQ0KICAgICAgICAgICAgZnVuY3Rpb24gc3RlcChyZXN1bHQpIHsgcmVzdWx0LmRvbmUgPyByZXNvbHZlKHJlc3VsdC52YWx1ZSkgOiBhZG9wdChyZXN1bHQudmFsdWUpLnRoZW4oZnVsZmlsbGVkLCByZWplY3RlZCk7IH0NCiAgICAgICAgICAgIHN0ZXAoKGdlbmVyYXRvciA9IGdlbmVyYXRvci5hcHBseSh0aGlzQXJnLCBfYXJndW1lbnRzIHx8IFtdKSkubmV4dCgpKTsNCiAgICAgICAgfSk7DQogICAgfQ0KDQogICAgZnVuY3Rpb24gX19nZW5lcmF0b3IodGhpc0FyZywgYm9keSkgew0KICAgICAgICB2YXIgXyA9IHsgbGFiZWw6IDAsIHNlbnQ6IGZ1bmN0aW9uKCkgeyBpZiAodFswXSAmIDEpIHRocm93IHRbMV07IHJldHVybiB0WzFdOyB9LCB0cnlzOiBbXSwgb3BzOiBbXSB9LCBmLCB5LCB0LCBnOw0KICAgICAgICByZXR1cm4gZyA9IHsgbmV4dDogdmVyYigwKSwgInRocm93IjogdmVyYigxKSwgInJldHVybiI6IHZlcmIoMikgfSwgdHlwZW9mIFN5bWJvbCA9PT0gImZ1bmN0aW9uIiAmJiAoZ1tTeW1ib2wuaXRlcmF0b3JdID0gZnVuY3Rpb24oKSB7IHJldHVybiB0aGlzOyB9KSwgZzsNCiAgICAgICAgZnVuY3Rpb24gdmVyYihuKSB7IHJldHVybiBmdW5jdGlvbiAodikgeyByZXR1cm4gc3RlcChbbiwgdl0pOyB9OyB9DQogICAgICAgIGZ1bmN0aW9uIHN0ZXAob3ApIHsNCiAgICAgICAgICAgIGlmIChmKSB0aHJvdyBuZXcgVHlwZUVycm9yKCJHZW5lcmF0b3IgaXMgYWxyZWFkeSBleGVjdXRpbmcuIik7DQogICAgICAgICAgICB3aGlsZSAoZyAmJiAoZyA9IDAsIG9wWzBdICYmIChfID0gMCkpLCBfKSB0cnkgew0KICAgICAgICAgICAgICAgIGlmIChmID0gMSwgeSAmJiAodCA9IG9wWzBdICYgMiA/IHlbInJldHVybiJdIDogb3BbMF0gPyB5WyJ0aHJvdyJdIHx8ICgodCA9IHlbInJldHVybiJdKSAmJiB0LmNhbGwoeSksIDApIDogeS5uZXh0KSAmJiAhKHQgPSB0LmNhbGwoeSwgb3BbMV0pKS5kb25lKSByZXR1cm4gdDsNCiAgICAgICAgICAgICAgICBpZiAoeSA9IDAsIHQpIG9wID0gW29wWzBdICYgMiwgdC52YWx1ZV07DQogICAgICAgICAgICAgICAgc3dpdGNoIChvcFswXSkgew0KICAgICAgICAgICAgICAgICAgICBjYXNlIDA6IGNhc2UgMTogdCA9IG9wOyBicmVhazsNCiAgICAgICAgICAgICAgICAgICAgY2FzZSA0OiBfLmxhYmVsKys7IHJldHVybiB7IHZhbHVlOiBvcFsxXSwgZG9uZTogZmFsc2UgfTsNCiAgICAgICAgICAgICAgICAgICAgY2FzZSA1OiBfLmxhYmVsKys7IHkgPSBvcFsxXTsgb3AgPSBbMF07IGNvbnRpbnVlOw0KICAgICAgICAgICAgICAgICAgICBjYXNlIDc6IG9wID0gXy5vcHMucG9wKCk7IF8udHJ5cy5wb3AoKTsgY29udGludWU7DQogICAgICAgICAgICAgICAgICAgIGRlZmF1bHQ6DQogICAgICAgICAgICAgICAgICAgICAgICBpZiAoISh0ID0gXy50cnlzLCB0ID0gdC5sZW5ndGggPiAwICYmIHRbdC5sZW5ndGggLSAxXSkgJiYgKG9wWzBdID09PSA2IHx8IG9wWzBdID09PSAyKSkgeyBfID0gMDsgY29udGludWU7IH0NCiAgICAgICAgICAgICAgICAgICAgICAgIGlmIChvcFswXSA9PT0gMyAmJiAoIXQgfHwgKG9wWzFdID4gdFswXSAmJiBvcFsxXSA8IHRbM10pKSkgeyBfLmxhYmVsID0gb3BbMV07IGJyZWFrOyB9DQogICAgICAgICAgICAgICAgICAgICAgICBpZiAob3BbMF0gPT09IDYgJiYgXy5sYWJlbCA8IHRbMV0pIHsgXy5sYWJlbCA9IHRbMV07IHQgPSBvcDsgYnJlYWs7IH0NCiAgICAgICAgICAgICAgICAgICAgICAgIGlmICh0ICYmIF8ubGFiZWwgPCB0WzJdKSB7IF8ubGFiZWwgPSB0WzJdOyBfLm9wcy5wdXNoKG9wKTsgYnJlYWs7IH0NCiAgICAgICAgICAgICAgICAgICAgICAgIGlmICh0WzJdKSBfLm9wcy5wb3AoKTsNCiAgICAgICAgICAgICAgICAgICAgICAgIF8udHJ5cy5wb3AoKTsgY29udGludWU7DQogICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgICAgIG9wID0gYm9keS5jYWxsKHRoaXNBcmcsIF8pOw0KICAgICAgICAgICAgfSBjYXRjaCAoZSkgeyBvcCA9IFs2LCBlXTsgeSA9IDA7IH0gZmluYWxseSB7IGYgPSB0ID0gMDsgfQ0KICAgICAgICAgICAgaWYgKG9wWzBdICYgNSkgdGhyb3cgb3BbMV07IHJldHVybiB7IHZhbHVlOiBvcFswXSA/IG9wWzFdIDogdm9pZCAwLCBkb25lOiB0cnVlIH07DQogICAgICAgIH0NCiAgICB9CgogICAgZnVuY3Rpb24gaXNQcm9taXNlIChvYmopIHsKICAgICAgLy8gdmlhIGh0dHBzOi8vdW5wa2cuY29tL2lzLXByb21pc2VAMi4xLjAvaW5kZXguanMKICAgICAgcmV0dXJuICEhb2JqICYmICh0eXBlb2Ygb2JqID09PSAnb2JqZWN0JyB8fCB0eXBlb2Ygb2JqID09PSAnZnVuY3Rpb24nKSAmJiB0eXBlb2Ygb2JqLnRoZW4gPT09ICdmdW5jdGlvbicKICAgIH0KCiAgICBmdW5jdGlvbiByZWdpc3RlclByb21pc2VXb3JrZXIgKGNhbGxiYWNrKSB7CiAgICAgIGZ1bmN0aW9uIHBvc3RPdXRnb2luZ01lc3NhZ2UgKGUsIG1lc3NhZ2VJZCwgZXJyb3IsIHJlc3VsdCkgewogICAgICAgIGZ1bmN0aW9uIHBvc3RNZXNzYWdlIChtc2cpIHsKICAgICAgICAgIC8qIGlzdGFuYnVsIGlnbm9yZSBpZiAqLwogICAgICAgICAgaWYgKHR5cGVvZiBzZWxmLnBvc3RNZXNzYWdlICE9PSAnZnVuY3Rpb24nKSB7IC8vIHNlcnZpY2Ugd29ya2VyCiAgICAgICAgICAgIGUucG9ydHNbMF0ucG9zdE1lc3NhZ2UobXNnKTsKICAgICAgICAgIH0gZWxzZSB7IC8vIHdlYiB3b3JrZXIKICAgICAgICAgICAgc2VsZi5wb3N0TWVzc2FnZShtc2cpOwogICAgICAgICAgfQogICAgICAgIH0KICAgICAgICBpZiAoZXJyb3IpIHsKICAgICAgICAgIC8qIGlzdGFuYnVsIGlnbm9yZSBlbHNlICovCiAgICAgICAgICBpZiAodHlwZW9mIGNvbnNvbGUgIT09ICd1bmRlZmluZWQnICYmICdlcnJvcicgaW4gY29uc29sZSkgewogICAgICAgICAgICAvLyBUaGlzIGlzIHRvIG1ha2UgZXJyb3JzIGVhc2llciB0byBkZWJ1Zy4gSSB0aGluayBpdCdzIGltcG9ydGFudAogICAgICAgICAgICAvLyBlbm91Z2ggdG8ganVzdCBsZWF2ZSBoZXJlIHdpdGhvdXQgZ2l2aW5nIHRoZSB1c2VyIGFuIG9wdGlvbgogICAgICAgICAgICAvLyB0byBzaWxlbmNlIGl0LgogICAgICAgICAgICBjb25zb2xlLmVycm9yKCdXb3JrZXIgY2F1Z2h0IGFuIGVycm9yOicsIGVycm9yKTsKICAgICAgICAgIH0KICAgICAgICAgIHBvc3RNZXNzYWdlKFttZXNzYWdlSWQsIHsKICAgICAgICAgICAgbWVzc2FnZTogZXJyb3IubWVzc2FnZQogICAgICAgICAgfV0pOwogICAgICAgIH0gZWxzZSB7CiAgICAgICAgICBwb3N0TWVzc2FnZShbbWVzc2FnZUlkLCBudWxsLCByZXN1bHRdKTsKICAgICAgICB9CiAgICAgIH0KCiAgICAgIGZ1bmN0aW9uIHRyeUNhdGNoRnVuYyAoY2FsbGJhY2ssIG1lc3NhZ2UpIHsKICAgICAgICB0cnkgewogICAgICAgICAgcmV0dXJuIHsgcmVzOiBjYWxsYmFjayhtZXNzYWdlKSB9CiAgICAgICAgfSBjYXRjaCAoZSkgewogICAgICAgICAgcmV0dXJuIHsgZXJyOiBlIH0KICAgICAgICB9CiAgICAgIH0KCiAgICAgIGZ1bmN0aW9uIGhhbmRsZUluY29taW5nTWVzc2FnZSAoZSwgY2FsbGJhY2ssIG1lc3NhZ2VJZCwgbWVzc2FnZSkgewogICAgICAgIHZhciByZXN1bHQgPSB0cnlDYXRjaEZ1bmMoY2FsbGJhY2ssIG1lc3NhZ2UpOwoKICAgICAgICBpZiAocmVzdWx0LmVycikgewogICAgICAgICAgcG9zdE91dGdvaW5nTWVzc2FnZShlLCBtZXNzYWdlSWQsIHJlc3VsdC5lcnIpOwogICAgICAgIH0gZWxzZSBpZiAoIWlzUHJvbWlzZShyZXN1bHQucmVzKSkgewogICAgICAgICAgcG9zdE91dGdvaW5nTWVzc2FnZShlLCBtZXNzYWdlSWQsIG51bGwsIHJlc3VsdC5yZXMpOwogICAgICAgIH0gZWxzZSB7CiAgICAgICAgICByZXN1bHQucmVzLnRoZW4oZnVuY3Rpb24gKGZpbmFsUmVzdWx0KSB7CiAgICAgICAgICAgIHBvc3RPdXRnb2luZ01lc3NhZ2UoZSwgbWVzc2FnZUlkLCBudWxsLCBmaW5hbFJlc3VsdCk7CiAgICAgICAgICB9LCBmdW5jdGlvbiAoZmluYWxFcnJvcikgewogICAgICAgICAgICBwb3N0T3V0Z29pbmdNZXNzYWdlKGUsIG1lc3NhZ2VJZCwgZmluYWxFcnJvcik7CiAgICAgICAgICB9KTsKICAgICAgICB9CiAgICAgIH0KCiAgICAgIGZ1bmN0aW9uIG9uSW5jb21pbmdNZXNzYWdlIChlKSB7CiAgICAgICAgdmFyIHBheWxvYWQgPSBlLmRhdGE7CiAgICAgICAgaWYgKCFBcnJheS5pc0FycmF5KHBheWxvYWQpIHx8IHBheWxvYWQubGVuZ3RoICE9PSAyKSB7CiAgICAgICAgICAvLyBtZXNzYWdlIGRvZW5zJ3QgbWF0Y2ggY29tbXVuaWNhdGlvbiBmb3JtYXQ7IGlnbm9yZQogICAgICAgICAgcmV0dXJuCiAgICAgICAgfQogICAgICAgIHZhciBtZXNzYWdlSWQgPSBwYXlsb2FkWzBdOwogICAgICAgIHZhciBtZXNzYWdlID0gcGF5bG9hZFsxXTsKCiAgICAgICAgaWYgKHR5cGVvZiBjYWxsYmFjayAhPT0gJ2Z1bmN0aW9uJykgewogICAgICAgICAgcG9zdE91dGdvaW5nTWVzc2FnZShlLCBtZXNzYWdlSWQsIG5ldyBFcnJvcigKICAgICAgICAgICAgJ1BsZWFzZSBwYXNzIGEgZnVuY3Rpb24gaW50byByZWdpc3RlcigpLicpKTsKICAgICAgICB9IGVsc2UgewogICAgICAgICAgaGFuZGxlSW5jb21pbmdNZXNzYWdlKGUsIGNhbGxiYWNrLCBtZXNzYWdlSWQsIG1lc3NhZ2UpOwogICAgICAgIH0KICAgICAgfQoKICAgICAgc2VsZi5hZGRFdmVudExpc3RlbmVyKCdtZXNzYWdlJywgb25JbmNvbWluZ01lc3NhZ2UpOwogICAgfQoKICAgIHZhciByZWdpc3RlciA9IHJlZ2lzdGVyUHJvbWlzZVdvcmtlcjsKCiAgICB2YXIgbG9hZGVkID0gZmFsc2U7CiAgICByZWdpc3RlcihmdW5jdGlvbiAobXNnKSB7IHJldHVybiBfX2F3YWl0ZXIodm9pZCAwLCB2b2lkIDAsIHZvaWQgMCwgZnVuY3Rpb24gKCkgewogICAgICAgIHZhciBsb2FkQ2hlY2ssIF9hLCBhcmdzLCBhc3NldHNVcmwsIHdhc21VcmxfMSwgYXJncywgZnVuY05hbWUsIGZ1bmNBcmdzLCBwdHJTaG91bGRGcmVlXzEsIG5ld0FyZ3MsIHJlcywgcmVzLCBfaSwgX2IsIGtleXMsIGFyZ3MsIGRhdGEsIHB0ciwgYXJncywgcHRyLCBhcmdzLCBwdHIsIGJ5dGVzOwogICAgICAgIHJldHVybiBfX2dlbmVyYXRvcih0aGlzLCBmdW5jdGlvbiAoX2MpIHsKICAgICAgICAgICAgc3dpdGNoIChfYy5sYWJlbCkgewogICAgICAgICAgICAgICAgY2FzZSAwOgogICAgICAgICAgICAgICAgICAgIGxvYWRDaGVjayA9IGZ1bmN0aW9uICgpIHsKICAgICAgICAgICAgICAgICAgICAgICAgaWYgKCFsb2FkZWQpIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgIHRocm93IG5ldyBFcnJvcigiV2ViQXNzZW1ibHkgaXMgbm90IGxvYWRlZCEiKTsKICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIH07CiAgICAgICAgICAgICAgICAgICAgX2EgPSBtc2cuY21kOwogICAgICAgICAgICAgICAgICAgIHN3aXRjaCAoX2EpIHsKICAgICAgICAgICAgICAgICAgICAgICAgY2FzZSAibG9hZCI6IHJldHVybiBbMyAvKmJyZWFrKi8sIDFdOwogICAgICAgICAgICAgICAgICAgICAgICBjYXNlICJjYWxsIjogcmV0dXJuIFszIC8qYnJlYWsqLywgNF07CiAgICAgICAgICAgICAgICAgICAgICAgIGNhc2UgImdldEtleXMiOiByZXR1cm4gWzMgLypicmVhayovLCA1XTsKICAgICAgICAgICAgICAgICAgICAgICAgY2FzZSAiY3JlYXRlSGVhcCI6IHJldHVybiBbMyAvKmJyZWFrKi8sIDZdOwogICAgICAgICAgICAgICAgICAgICAgICBjYXNlICJmcmVlSGVhcCI6IHJldHVybiBbMyAvKmJyZWFrKi8sIDddOwogICAgICAgICAgICAgICAgICAgICAgICBjYXNlICJnZXRIZWFwIjogcmV0dXJuIFszIC8qYnJlYWsqLywgOF07CiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIHJldHVybiBbMyAvKmJyZWFrKi8sIDldOwogICAgICAgICAgICAgICAgY2FzZSAxOgogICAgICAgICAgICAgICAgICAgIGlmIChsb2FkZWQpIHsKICAgICAgICAgICAgICAgICAgICAgICAgdGhyb3cgbmV3IEVycm9yKCJXZWJBc3NlbWJseSBpcyBsb2FkZWQhIik7CiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIGFyZ3MgPSBtc2cuYXJnczsKICAgICAgICAgICAgICAgICAgICBhc3NldHNVcmwgPSBhcmdzWzBdOwogICAgICAgICAgICAgICAgICAgIHdhc21VcmxfMSA9IGFyZ3NbMV07CiAgICAgICAgICAgICAgICAgICAgc2VsZi5Nb2R1bGUgPSB7CiAgICAgICAgICAgICAgICAgICAgICAgIGxvY2F0ZUZpbGU6IGZ1bmN0aW9uIChwYXRoKSB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBpZiAocGF0aC5lbmRzV2l0aCgid2FzbSIpICYmIHdhc21VcmxfMSkgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybiB3YXNtVXJsXzE7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4gcGF0aDsKICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgb25SdW50aW1lSW5pdGlhbGl6ZWQ6IGZ1bmN0aW9uICgpIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGxvYWRlZCA9IHRydWU7CiAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICB9OwogICAgICAgICAgICAgICAgICAgIGltcG9ydFNjcmlwdHMoYXNzZXRzVXJsKTsKICAgICAgICAgICAgICAgICAgICBpZiAoISFsb2FkZWQpIHJldHVybiBbMyAvKmJyZWFrKi8sIDNdOwogICAgICAgICAgICAgICAgICAgIHJldHVybiBbNCAvKnlpZWxkKi8sIG5ldyBQcm9taXNlKGZ1bmN0aW9uIChyZXMpIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgIE1vZHVsZS5vblJ1bnRpbWVJbml0aWFsaXplZCA9IGZ1bmN0aW9uICgpIHsgcmV0dXJuIHJlcygpOyB9OwogICAgICAgICAgICAgICAgICAgICAgICB9KV07CiAgICAgICAgICAgICAgICBjYXNlIDI6CiAgICAgICAgICAgICAgICAgICAgX2Muc2VudCgpOwogICAgICAgICAgICAgICAgICAgIGxvYWRlZCA9IHRydWU7CiAgICAgICAgICAgICAgICAgICAgX2MubGFiZWwgPSAzOwogICAgICAgICAgICAgICAgY2FzZSAzOiByZXR1cm4gWzIgLypyZXR1cm4qLywgdHJ1ZV07CiAgICAgICAgICAgICAgICBjYXNlIDQ6CiAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICBsb2FkQ2hlY2soKTsKICAgICAgICAgICAgICAgICAgICAgICAgYXJncyA9IG1zZy5hcmdzOwogICAgICAgICAgICAgICAgICAgICAgICBmdW5jTmFtZSA9IGFyZ3NbMF07CiAgICAgICAgICAgICAgICAgICAgICAgIGZ1bmNBcmdzID0gYXJnc1sxXTsKICAgICAgICAgICAgICAgICAgICAgICAgcHRyU2hvdWxkRnJlZV8xID0gW107CiAgICAgICAgICAgICAgICAgICAgICAgIG5ld0FyZ3MgPSBmdW5jQXJncy5tYXAoZnVuY3Rpb24gKGFyZykgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgaWYgKHR5cGVvZiBhcmcgPT09ICJzdHJpbmciKSB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdmFyIHN0clB0ciA9IE1vZHVsZS5fbWFsbG9jKGFyZy5sZW5ndGggKiAyKTsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBNb2R1bGUuc3RyaW5nVG9VVEY4KGFyZywgc3RyUHRyLCBhcmcubGVuZ3RoICogMik7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcHRyU2hvdWxkRnJlZV8xLnB1c2goc3RyUHRyKTsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4gc3RyUHRyOwogICAgICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgcmV0dXJuIGFyZzsKICAgICAgICAgICAgICAgICAgICAgICAgfSk7CiAgICAgICAgICAgICAgICAgICAgICAgIHJlcyA9IE1vZHVsZVsiXyIgKyBmdW5jTmFtZV0uYXBwbHkoTW9kdWxlLCBuZXdBcmdzKSB8fCB0cnVlOwogICAgICAgICAgICAgICAgICAgICAgICBwdHJTaG91bGRGcmVlXzEuZm9yRWFjaChmdW5jdGlvbiAocHRyKSB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBNb2R1bGUuX2ZyZWUocHRyKTsKICAgICAgICAgICAgICAgICAgICAgICAgfSk7CiAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybiBbMiAvKnJldHVybiovLCByZXNdOwogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIGNhc2UgNToKICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgIGxvYWRDaGVjaygpOwogICAgICAgICAgICAgICAgICAgICAgICByZXMgPSBbXTsKICAgICAgICAgICAgICAgICAgICAgICAgZm9yIChfaSA9IDAsIF9iID0gT2JqZWN0LmtleXMoTW9kdWxlKTsgX2kgPCBfYi5sZW5ndGg7IF9pKyspIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGtleXMgPSBfYltfaV07CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBpZiAoa2V5cy5zdGFydHNXaXRoKCJfIikpIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZXMucHVzaChrZXlzLnNsaWNlKDEpKTsKICAgICAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4gWzIgLypyZXR1cm4qLywgcmVzXTsKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICBjYXNlIDY6CiAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICBsb2FkQ2hlY2soKTsKICAgICAgICAgICAgICAgICAgICAgICAgYXJncyA9IG1zZy5hcmdzOwogICAgICAgICAgICAgICAgICAgICAgICBkYXRhID0gYXJnc1swXTsKICAgICAgICAgICAgICAgICAgICAgICAgcHRyID0gTW9kdWxlLl9tYWxsb2MoZGF0YS5ieXRlTGVuZ3RoKTsKICAgICAgICAgICAgICAgICAgICAgICAgTW9kdWxlLkhFQVA4LnNldChkYXRhLCBwdHIpOwogICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4gWzIgLypyZXR1cm4qLywgcHRyXTsKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICBjYXNlIDc6CiAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICBsb2FkQ2hlY2soKTsKICAgICAgICAgICAgICAgICAgICAgICAgYXJncyA9IG1zZy5hcmdzOwogICAgICAgICAgICAgICAgICAgICAgICBwdHIgPSBhcmdzWzBdOwogICAgICAgICAgICAgICAgICAgICAgICBNb2R1bGUuX2ZyZWUocHRyKTsKICAgICAgICAgICAgICAgICAgICAgICAgcmV0dXJuIFsyIC8qcmV0dXJuKi8sIHRydWVdOwogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIGNhc2UgODoKICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgIGxvYWRDaGVjaygpOwogICAgICAgICAgICAgICAgICAgICAgICBhcmdzID0gbXNnLmFyZ3M7CiAgICAgICAgICAgICAgICAgICAgICAgIHB0ciA9IGFyZ3NbMF07CiAgICAgICAgICAgICAgICAgICAgICAgIGJ5dGVzID0gYXJnc1sxXTsKICAgICAgICAgICAgICAgICAgICAgICAgcmV0dXJuIFsyIC8qcmV0dXJuKi8sIG5ldyBJbnQ4QXJyYXkoTW9kdWxlLkhFQVA4LnN1YmFycmF5KHB0ciwgcHRyICsgYnl0ZXMpKV07CiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgY2FzZSA5OgogICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgdGhyb3cgbmV3IEVycm9yKCJVbmtub3duIE1lc3NhZ2UuIik7CiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgY2FzZSAxMDogcmV0dXJuIFsyIC8qcmV0dXJuKi9dOwogICAgICAgICAgICB9CiAgICAgICAgfSk7CiAgICB9KTsgfSk7Cgp9KSgpOwovLyMgc291cmNlTWFwcGluZ1VSTD13YXNtLndvcmtlci5qcy5tYXAKCg==', null, false);
+        var WorkerFactory = createBase64WorkerFactory('Lyogcm9sbHVwLXBsdWdpbi13ZWItd29ya2VyLWxvYWRlciAqLwooZnVuY3Rpb24gKCkgewogICAgJ3VzZSBzdHJpY3QnOwoKICAgIC8qKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioNCiAgICBDb3B5cmlnaHQgKGMpIE1pY3Jvc29mdCBDb3Jwb3JhdGlvbi4NCg0KICAgIFBlcm1pc3Npb24gdG8gdXNlLCBjb3B5LCBtb2RpZnksIGFuZC9vciBkaXN0cmlidXRlIHRoaXMgc29mdHdhcmUgZm9yIGFueQ0KICAgIHB1cnBvc2Ugd2l0aCBvciB3aXRob3V0IGZlZSBpcyBoZXJlYnkgZ3JhbnRlZC4NCg0KICAgIFRIRSBTT0ZUV0FSRSBJUyBQUk9WSURFRCAiQVMgSVMiIEFORCBUSEUgQVVUSE9SIERJU0NMQUlNUyBBTEwgV0FSUkFOVElFUyBXSVRIDQogICAgUkVHQVJEIFRPIFRISVMgU09GVFdBUkUgSU5DTFVESU5HIEFMTCBJTVBMSUVEIFdBUlJBTlRJRVMgT0YgTUVSQ0hBTlRBQklMSVRZDQogICAgQU5EIEZJVE5FU1MuIElOIE5PIEVWRU5UIFNIQUxMIFRIRSBBVVRIT1IgQkUgTElBQkxFIEZPUiBBTlkgU1BFQ0lBTCwgRElSRUNULA0KICAgIElORElSRUNULCBPUiBDT05TRVFVRU5USUFMIERBTUFHRVMgT1IgQU5ZIERBTUFHRVMgV0hBVFNPRVZFUiBSRVNVTFRJTkcgRlJPTQ0KICAgIExPU1MgT0YgVVNFLCBEQVRBIE9SIFBST0ZJVFMsIFdIRVRIRVIgSU4gQU4gQUNUSU9OIE9GIENPTlRSQUNULCBORUdMSUdFTkNFIE9SDQogICAgT1RIRVIgVE9SVElPVVMgQUNUSU9OLCBBUklTSU5HIE9VVCBPRiBPUiBJTiBDT05ORUNUSU9OIFdJVEggVEhFIFVTRSBPUg0KICAgIFBFUkZPUk1BTkNFIE9GIFRISVMgU09GVFdBUkUuDQogICAgKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKiogKi8NCiAgICAvKiBnbG9iYWwgUmVmbGVjdCwgUHJvbWlzZSAqLw0KDQoNCiAgICBmdW5jdGlvbiBfX2F3YWl0ZXIodGhpc0FyZywgX2FyZ3VtZW50cywgUCwgZ2VuZXJhdG9yKSB7DQogICAgICAgIGZ1bmN0aW9uIGFkb3B0KHZhbHVlKSB7IHJldHVybiB2YWx1ZSBpbnN0YW5jZW9mIFAgPyB2YWx1ZSA6IG5ldyBQKGZ1bmN0aW9uIChyZXNvbHZlKSB7IHJlc29sdmUodmFsdWUpOyB9KTsgfQ0KICAgICAgICByZXR1cm4gbmV3IChQIHx8IChQID0gUHJvbWlzZSkpKGZ1bmN0aW9uIChyZXNvbHZlLCByZWplY3QpIHsNCiAgICAgICAgICAgIGZ1bmN0aW9uIGZ1bGZpbGxlZCh2YWx1ZSkgeyB0cnkgeyBzdGVwKGdlbmVyYXRvci5uZXh0KHZhbHVlKSk7IH0gY2F0Y2ggKGUpIHsgcmVqZWN0KGUpOyB9IH0NCiAgICAgICAgICAgIGZ1bmN0aW9uIHJlamVjdGVkKHZhbHVlKSB7IHRyeSB7IHN0ZXAoZ2VuZXJhdG9yWyJ0aHJvdyJdKHZhbHVlKSk7IH0gY2F0Y2ggKGUpIHsgcmVqZWN0KGUpOyB9IH0NCiAgICAgICAgICAgIGZ1bmN0aW9uIHN0ZXAocmVzdWx0KSB7IHJlc3VsdC5kb25lID8gcmVzb2x2ZShyZXN1bHQudmFsdWUpIDogYWRvcHQocmVzdWx0LnZhbHVlKS50aGVuKGZ1bGZpbGxlZCwgcmVqZWN0ZWQpOyB9DQogICAgICAgICAgICBzdGVwKChnZW5lcmF0b3IgPSBnZW5lcmF0b3IuYXBwbHkodGhpc0FyZywgX2FyZ3VtZW50cyB8fCBbXSkpLm5leHQoKSk7DQogICAgICAgIH0pOw0KICAgIH0NCg0KICAgIGZ1bmN0aW9uIF9fZ2VuZXJhdG9yKHRoaXNBcmcsIGJvZHkpIHsNCiAgICAgICAgdmFyIF8gPSB7IGxhYmVsOiAwLCBzZW50OiBmdW5jdGlvbigpIHsgaWYgKHRbMF0gJiAxKSB0aHJvdyB0WzFdOyByZXR1cm4gdFsxXTsgfSwgdHJ5czogW10sIG9wczogW10gfSwgZiwgeSwgdCwgZzsNCiAgICAgICAgcmV0dXJuIGcgPSB7IG5leHQ6IHZlcmIoMCksICJ0aHJvdyI6IHZlcmIoMSksICJyZXR1cm4iOiB2ZXJiKDIpIH0sIHR5cGVvZiBTeW1ib2wgPT09ICJmdW5jdGlvbiIgJiYgKGdbU3ltYm9sLml0ZXJhdG9yXSA9IGZ1bmN0aW9uKCkgeyByZXR1cm4gdGhpczsgfSksIGc7DQogICAgICAgIGZ1bmN0aW9uIHZlcmIobikgeyByZXR1cm4gZnVuY3Rpb24gKHYpIHsgcmV0dXJuIHN0ZXAoW24sIHZdKTsgfTsgfQ0KICAgICAgICBmdW5jdGlvbiBzdGVwKG9wKSB7DQogICAgICAgICAgICBpZiAoZikgdGhyb3cgbmV3IFR5cGVFcnJvcigiR2VuZXJhdG9yIGlzIGFscmVhZHkgZXhlY3V0aW5nLiIpOw0KICAgICAgICAgICAgd2hpbGUgKGcgJiYgKGcgPSAwLCBvcFswXSAmJiAoXyA9IDApKSwgXykgdHJ5IHsNCiAgICAgICAgICAgICAgICBpZiAoZiA9IDEsIHkgJiYgKHQgPSBvcFswXSAmIDIgPyB5WyJyZXR1cm4iXSA6IG9wWzBdID8geVsidGhyb3ciXSB8fCAoKHQgPSB5WyJyZXR1cm4iXSkgJiYgdC5jYWxsKHkpLCAwKSA6IHkubmV4dCkgJiYgISh0ID0gdC5jYWxsKHksIG9wWzFdKSkuZG9uZSkgcmV0dXJuIHQ7DQogICAgICAgICAgICAgICAgaWYgKHkgPSAwLCB0KSBvcCA9IFtvcFswXSAmIDIsIHQudmFsdWVdOw0KICAgICAgICAgICAgICAgIHN3aXRjaCAob3BbMF0pIHsNCiAgICAgICAgICAgICAgICAgICAgY2FzZSAwOiBjYXNlIDE6IHQgPSBvcDsgYnJlYWs7DQogICAgICAgICAgICAgICAgICAgIGNhc2UgNDogXy5sYWJlbCsrOyByZXR1cm4geyB2YWx1ZTogb3BbMV0sIGRvbmU6IGZhbHNlIH07DQogICAgICAgICAgICAgICAgICAgIGNhc2UgNTogXy5sYWJlbCsrOyB5ID0gb3BbMV07IG9wID0gWzBdOyBjb250aW51ZTsNCiAgICAgICAgICAgICAgICAgICAgY2FzZSA3OiBvcCA9IF8ub3BzLnBvcCgpOyBfLnRyeXMucG9wKCk7IGNvbnRpbnVlOw0KICAgICAgICAgICAgICAgICAgICBkZWZhdWx0Og0KICAgICAgICAgICAgICAgICAgICAgICAgaWYgKCEodCA9IF8udHJ5cywgdCA9IHQubGVuZ3RoID4gMCAmJiB0W3QubGVuZ3RoIC0gMV0pICYmIChvcFswXSA9PT0gNiB8fCBvcFswXSA9PT0gMikpIHsgXyA9IDA7IGNvbnRpbnVlOyB9DQogICAgICAgICAgICAgICAgICAgICAgICBpZiAob3BbMF0gPT09IDMgJiYgKCF0IHx8IChvcFsxXSA+IHRbMF0gJiYgb3BbMV0gPCB0WzNdKSkpIHsgXy5sYWJlbCA9IG9wWzFdOyBicmVhazsgfQ0KICAgICAgICAgICAgICAgICAgICAgICAgaWYgKG9wWzBdID09PSA2ICYmIF8ubGFiZWwgPCB0WzFdKSB7IF8ubGFiZWwgPSB0WzFdOyB0ID0gb3A7IGJyZWFrOyB9DQogICAgICAgICAgICAgICAgICAgICAgICBpZiAodCAmJiBfLmxhYmVsIDwgdFsyXSkgeyBfLmxhYmVsID0gdFsyXTsgXy5vcHMucHVzaChvcCk7IGJyZWFrOyB9DQogICAgICAgICAgICAgICAgICAgICAgICBpZiAodFsyXSkgXy5vcHMucG9wKCk7DQogICAgICAgICAgICAgICAgICAgICAgICBfLnRyeXMucG9wKCk7IGNvbnRpbnVlOw0KICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgICAgICBvcCA9IGJvZHkuY2FsbCh0aGlzQXJnLCBfKTsNCiAgICAgICAgICAgIH0gY2F0Y2ggKGUpIHsgb3AgPSBbNiwgZV07IHkgPSAwOyB9IGZpbmFsbHkgeyBmID0gdCA9IDA7IH0NCiAgICAgICAgICAgIGlmIChvcFswXSAmIDUpIHRocm93IG9wWzFdOyByZXR1cm4geyB2YWx1ZTogb3BbMF0gPyBvcFsxXSA6IHZvaWQgMCwgZG9uZTogdHJ1ZSB9Ow0KICAgICAgICB9DQogICAgfQoKICAgIGZ1bmN0aW9uIGlzUHJvbWlzZSAob2JqKSB7CiAgICAgIC8vIHZpYSBodHRwczovL3VucGtnLmNvbS9pcy1wcm9taXNlQDIuMS4wL2luZGV4LmpzCiAgICAgIHJldHVybiAhIW9iaiAmJiAodHlwZW9mIG9iaiA9PT0gJ29iamVjdCcgfHwgdHlwZW9mIG9iaiA9PT0gJ2Z1bmN0aW9uJykgJiYgdHlwZW9mIG9iai50aGVuID09PSAnZnVuY3Rpb24nCiAgICB9CgogICAgZnVuY3Rpb24gcmVnaXN0ZXJQcm9taXNlV29ya2VyIChjYWxsYmFjaykgewogICAgICBmdW5jdGlvbiBwb3N0T3V0Z29pbmdNZXNzYWdlIChlLCBtZXNzYWdlSWQsIGVycm9yLCByZXN1bHQpIHsKICAgICAgICBmdW5jdGlvbiBwb3N0TWVzc2FnZSAobXNnKSB7CiAgICAgICAgICAvKiBpc3RhbmJ1bCBpZ25vcmUgaWYgKi8KICAgICAgICAgIGlmICh0eXBlb2Ygc2VsZi5wb3N0TWVzc2FnZSAhPT0gJ2Z1bmN0aW9uJykgeyAvLyBzZXJ2aWNlIHdvcmtlcgogICAgICAgICAgICBlLnBvcnRzWzBdLnBvc3RNZXNzYWdlKG1zZyk7CiAgICAgICAgICB9IGVsc2UgeyAvLyB3ZWIgd29ya2VyCiAgICAgICAgICAgIHNlbGYucG9zdE1lc3NhZ2UobXNnKTsKICAgICAgICAgIH0KICAgICAgICB9CiAgICAgICAgaWYgKGVycm9yKSB7CiAgICAgICAgICAvKiBpc3RhbmJ1bCBpZ25vcmUgZWxzZSAqLwogICAgICAgICAgaWYgKHR5cGVvZiBjb25zb2xlICE9PSAndW5kZWZpbmVkJyAmJiAnZXJyb3InIGluIGNvbnNvbGUpIHsKICAgICAgICAgICAgLy8gVGhpcyBpcyB0byBtYWtlIGVycm9ycyBlYXNpZXIgdG8gZGVidWcuIEkgdGhpbmsgaXQncyBpbXBvcnRhbnQKICAgICAgICAgICAgLy8gZW5vdWdoIHRvIGp1c3QgbGVhdmUgaGVyZSB3aXRob3V0IGdpdmluZyB0aGUgdXNlciBhbiBvcHRpb24KICAgICAgICAgICAgLy8gdG8gc2lsZW5jZSBpdC4KICAgICAgICAgICAgY29uc29sZS5lcnJvcignV29ya2VyIGNhdWdodCBhbiBlcnJvcjonLCBlcnJvcik7CiAgICAgICAgICB9CiAgICAgICAgICBwb3N0TWVzc2FnZShbbWVzc2FnZUlkLCB7CiAgICAgICAgICAgIG1lc3NhZ2U6IGVycm9yLm1lc3NhZ2UKICAgICAgICAgIH1dKTsKICAgICAgICB9IGVsc2UgewogICAgICAgICAgcG9zdE1lc3NhZ2UoW21lc3NhZ2VJZCwgbnVsbCwgcmVzdWx0XSk7CiAgICAgICAgfQogICAgICB9CgogICAgICBmdW5jdGlvbiB0cnlDYXRjaEZ1bmMgKGNhbGxiYWNrLCBtZXNzYWdlKSB7CiAgICAgICAgdHJ5IHsKICAgICAgICAgIHJldHVybiB7IHJlczogY2FsbGJhY2sobWVzc2FnZSkgfQogICAgICAgIH0gY2F0Y2ggKGUpIHsKICAgICAgICAgIHJldHVybiB7IGVycjogZSB9CiAgICAgICAgfQogICAgICB9CgogICAgICBmdW5jdGlvbiBoYW5kbGVJbmNvbWluZ01lc3NhZ2UgKGUsIGNhbGxiYWNrLCBtZXNzYWdlSWQsIG1lc3NhZ2UpIHsKICAgICAgICB2YXIgcmVzdWx0ID0gdHJ5Q2F0Y2hGdW5jKGNhbGxiYWNrLCBtZXNzYWdlKTsKCiAgICAgICAgaWYgKHJlc3VsdC5lcnIpIHsKICAgICAgICAgIHBvc3RPdXRnb2luZ01lc3NhZ2UoZSwgbWVzc2FnZUlkLCByZXN1bHQuZXJyKTsKICAgICAgICB9IGVsc2UgaWYgKCFpc1Byb21pc2UocmVzdWx0LnJlcykpIHsKICAgICAgICAgIHBvc3RPdXRnb2luZ01lc3NhZ2UoZSwgbWVzc2FnZUlkLCBudWxsLCByZXN1bHQucmVzKTsKICAgICAgICB9IGVsc2UgewogICAgICAgICAgcmVzdWx0LnJlcy50aGVuKGZ1bmN0aW9uIChmaW5hbFJlc3VsdCkgewogICAgICAgICAgICBwb3N0T3V0Z29pbmdNZXNzYWdlKGUsIG1lc3NhZ2VJZCwgbnVsbCwgZmluYWxSZXN1bHQpOwogICAgICAgICAgfSwgZnVuY3Rpb24gKGZpbmFsRXJyb3IpIHsKICAgICAgICAgICAgcG9zdE91dGdvaW5nTWVzc2FnZShlLCBtZXNzYWdlSWQsIGZpbmFsRXJyb3IpOwogICAgICAgICAgfSk7CiAgICAgICAgfQogICAgICB9CgogICAgICBmdW5jdGlvbiBvbkluY29taW5nTWVzc2FnZSAoZSkgewogICAgICAgIHZhciBwYXlsb2FkID0gZS5kYXRhOwogICAgICAgIGlmICghQXJyYXkuaXNBcnJheShwYXlsb2FkKSB8fCBwYXlsb2FkLmxlbmd0aCAhPT0gMikgewogICAgICAgICAgLy8gbWVzc2FnZSBkb2Vucyd0IG1hdGNoIGNvbW11bmljYXRpb24gZm9ybWF0OyBpZ25vcmUKICAgICAgICAgIHJldHVybgogICAgICAgIH0KICAgICAgICB2YXIgbWVzc2FnZUlkID0gcGF5bG9hZFswXTsKICAgICAgICB2YXIgbWVzc2FnZSA9IHBheWxvYWRbMV07CgogICAgICAgIGlmICh0eXBlb2YgY2FsbGJhY2sgIT09ICdmdW5jdGlvbicpIHsKICAgICAgICAgIHBvc3RPdXRnb2luZ01lc3NhZ2UoZSwgbWVzc2FnZUlkLCBuZXcgRXJyb3IoCiAgICAgICAgICAgICdQbGVhc2UgcGFzcyBhIGZ1bmN0aW9uIGludG8gcmVnaXN0ZXIoKS4nKSk7CiAgICAgICAgfSBlbHNlIHsKICAgICAgICAgIGhhbmRsZUluY29taW5nTWVzc2FnZShlLCBjYWxsYmFjaywgbWVzc2FnZUlkLCBtZXNzYWdlKTsKICAgICAgICB9CiAgICAgIH0KCiAgICAgIHNlbGYuYWRkRXZlbnRMaXN0ZW5lcignbWVzc2FnZScsIG9uSW5jb21pbmdNZXNzYWdlKTsKICAgIH0KCiAgICB2YXIgcmVnaXN0ZXIgPSByZWdpc3RlclByb21pc2VXb3JrZXI7CgogICAgdmFyIGxvYWRlZCA9IGZhbHNlOwogICAgcmVnaXN0ZXIoZnVuY3Rpb24gKG1zZykgeyByZXR1cm4gX19hd2FpdGVyKHZvaWQgMCwgdm9pZCAwLCB2b2lkIDAsIGZ1bmN0aW9uICgpIHsKICAgICAgICB2YXIgbG9hZENoZWNrLCBfYSwgYXJncywgYXNzZXRzVXJsLCB3YXNtVXJsXzEsIGFyZ3MsIGZ1bmNOYW1lLCBmdW5jQXJncywgcHRyU2hvdWxkRnJlZV8xLCBuZXdBcmdzLCByZXMsIHJlcywgX2ksIF9iLCBrZXlzLCBhcmdzLCBkYXRhLCBwdHIsIGFyZ3MsIHB0ciwgYXJncywgcHRyLCBieXRlczsKICAgICAgICByZXR1cm4gX19nZW5lcmF0b3IodGhpcywgZnVuY3Rpb24gKF9jKSB7CiAgICAgICAgICAgIHN3aXRjaCAoX2MubGFiZWwpIHsKICAgICAgICAgICAgICAgIGNhc2UgMDoKICAgICAgICAgICAgICAgICAgICBsb2FkQ2hlY2sgPSBmdW5jdGlvbiAoKSB7CiAgICAgICAgICAgICAgICAgICAgICAgIGlmICghbG9hZGVkKSB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICB0aHJvdyBuZXcgRXJyb3IoIldlYkFzc2VtYmx5IGlzIG5vdCBsb2FkZWQhIik7CiAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICB9OwogICAgICAgICAgICAgICAgICAgIF9hID0gbXNnLmNtZDsKICAgICAgICAgICAgICAgICAgICBzd2l0Y2ggKF9hKSB7CiAgICAgICAgICAgICAgICAgICAgICAgIGNhc2UgImxvYWQiOiByZXR1cm4gWzMgLypicmVhayovLCAxXTsKICAgICAgICAgICAgICAgICAgICAgICAgY2FzZSAiY2FsbCI6IHJldHVybiBbMyAvKmJyZWFrKi8sIDRdOwogICAgICAgICAgICAgICAgICAgICAgICBjYXNlICJnZXRLZXlzIjogcmV0dXJuIFszIC8qYnJlYWsqLywgNV07CiAgICAgICAgICAgICAgICAgICAgICAgIGNhc2UgImNyZWF0ZUhlYXAiOiByZXR1cm4gWzMgLypicmVhayovLCA2XTsKICAgICAgICAgICAgICAgICAgICAgICAgY2FzZSAiZnJlZUhlYXAiOiByZXR1cm4gWzMgLypicmVhayovLCA3XTsKICAgICAgICAgICAgICAgICAgICAgICAgY2FzZSAiZ2V0SGVhcCI6IHJldHVybiBbMyAvKmJyZWFrKi8sIDhdOwogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICByZXR1cm4gWzMgLypicmVhayovLCA5XTsKICAgICAgICAgICAgICAgIGNhc2UgMToKICAgICAgICAgICAgICAgICAgICBpZiAobG9hZGVkKSB7CiAgICAgICAgICAgICAgICAgICAgICAgIHRocm93IG5ldyBFcnJvcigiV2ViQXNzZW1ibHkgaXMgbG9hZGVkISIpOwogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICBhcmdzID0gbXNnLmFyZ3M7CiAgICAgICAgICAgICAgICAgICAgYXNzZXRzVXJsID0gYXJnc1swXTsKICAgICAgICAgICAgICAgICAgICB3YXNtVXJsXzEgPSBhcmdzWzFdOwogICAgICAgICAgICAgICAgICAgIHNlbGYuTW9kdWxlID0gewogICAgICAgICAgICAgICAgICAgICAgICBsb2NhdGVGaWxlOiBmdW5jdGlvbiAocGF0aCkgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgaWYgKHBhdGguZW5kc1dpdGgoIndhc20iKSAmJiB3YXNtVXJsXzEpIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4gd2FzbVVybF8xOwogICAgICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgcmV0dXJuIHBhdGg7CiAgICAgICAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICAgICAgIG9uUnVudGltZUluaXRpYWxpemVkOiBmdW5jdGlvbiAoKSB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBsb2FkZWQgPSB0cnVlOwogICAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgfTsKICAgICAgICAgICAgICAgICAgICBpbXBvcnRTY3JpcHRzKGFzc2V0c1VybCk7CiAgICAgICAgICAgICAgICAgICAgaWYgKCEhbG9hZGVkKSByZXR1cm4gWzMgLypicmVhayovLCAzXTsKICAgICAgICAgICAgICAgICAgICByZXR1cm4gWzQgLyp5aWVsZCovLCBuZXcgUHJvbWlzZShmdW5jdGlvbiAocmVzKSB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBNb2R1bGUub25SdW50aW1lSW5pdGlhbGl6ZWQgPSBmdW5jdGlvbiAoKSB7IHJldHVybiByZXMoKTsgfTsKICAgICAgICAgICAgICAgICAgICAgICAgfSldOwogICAgICAgICAgICAgICAgY2FzZSAyOgogICAgICAgICAgICAgICAgICAgIF9jLnNlbnQoKTsKICAgICAgICAgICAgICAgICAgICBsb2FkZWQgPSB0cnVlOwogICAgICAgICAgICAgICAgICAgIF9jLmxhYmVsID0gMzsKICAgICAgICAgICAgICAgIGNhc2UgMzogcmV0dXJuIFsyIC8qcmV0dXJuKi8sIHRydWVdOwogICAgICAgICAgICAgICAgY2FzZSA0OgogICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgbG9hZENoZWNrKCk7CiAgICAgICAgICAgICAgICAgICAgICAgIGFyZ3MgPSBtc2cuYXJnczsKICAgICAgICAgICAgICAgICAgICAgICAgZnVuY05hbWUgPSBhcmdzWzBdOwogICAgICAgICAgICAgICAgICAgICAgICBmdW5jQXJncyA9IGFyZ3NbMV07CiAgICAgICAgICAgICAgICAgICAgICAgIHB0clNob3VsZEZyZWVfMSA9IFtdOwogICAgICAgICAgICAgICAgICAgICAgICBuZXdBcmdzID0gZnVuY0FyZ3MubWFwKGZ1bmN0aW9uIChhcmcpIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlmICh0eXBlb2YgYXJnID09PSAic3RyaW5nIikgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhciBzdHJQdHIgPSBNb2R1bGUuX21hbGxvYyhhcmcubGVuZ3RoICogMik7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTW9kdWxlLnN0cmluZ1RvVVRGOChhcmcsIHN0clB0ciwgYXJnLmxlbmd0aCAqIDIpOwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHB0clNob3VsZEZyZWVfMS5wdXNoKHN0clB0cik7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcmV0dXJuIHN0clB0cjsKICAgICAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybiBhcmc7CiAgICAgICAgICAgICAgICAgICAgICAgIH0pOwogICAgICAgICAgICAgICAgICAgICAgICByZXMgPSBNb2R1bGVbIl8iICsgZnVuY05hbWVdLmFwcGx5KE1vZHVsZSwgbmV3QXJncykgfHwgdHJ1ZTsKICAgICAgICAgICAgICAgICAgICAgICAgcHRyU2hvdWxkRnJlZV8xLmZvckVhY2goZnVuY3Rpb24gKHB0cikgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgTW9kdWxlLl9mcmVlKHB0cik7CiAgICAgICAgICAgICAgICAgICAgICAgIH0pOwogICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4gWzIgLypyZXR1cm4qLywgcmVzXTsKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICBjYXNlIDU6CiAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICBsb2FkQ2hlY2soKTsKICAgICAgICAgICAgICAgICAgICAgICAgcmVzID0gW107CiAgICAgICAgICAgICAgICAgICAgICAgIGZvciAoX2kgPSAwLCBfYiA9IE9iamVjdC5rZXlzKE1vZHVsZSk7IF9pIDwgX2IubGVuZ3RoOyBfaSsrKSB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBrZXlzID0gX2JbX2ldOwogICAgICAgICAgICAgICAgICAgICAgICAgICAgaWYgKGtleXMuc3RhcnRzV2l0aCgiXyIpKSB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcmVzLnB1c2goa2V5cy5zbGljZSgxKSk7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICAgICAgcmV0dXJuIFsyIC8qcmV0dXJuKi8sIHJlc107CiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgY2FzZSA2OgogICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgbG9hZENoZWNrKCk7CiAgICAgICAgICAgICAgICAgICAgICAgIGFyZ3MgPSBtc2cuYXJnczsKICAgICAgICAgICAgICAgICAgICAgICAgZGF0YSA9IGFyZ3NbMF07CiAgICAgICAgICAgICAgICAgICAgICAgIHB0ciA9IE1vZHVsZS5fbWFsbG9jKGRhdGEuYnl0ZUxlbmd0aCk7CiAgICAgICAgICAgICAgICAgICAgICAgIE1vZHVsZS5IRUFQOC5zZXQoZGF0YSwgcHRyKTsKICAgICAgICAgICAgICAgICAgICAgICAgcmV0dXJuIFsyIC8qcmV0dXJuKi8sIHB0cl07CiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgY2FzZSA3OgogICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgbG9hZENoZWNrKCk7CiAgICAgICAgICAgICAgICAgICAgICAgIGFyZ3MgPSBtc2cuYXJnczsKICAgICAgICAgICAgICAgICAgICAgICAgcHRyID0gYXJnc1swXTsKICAgICAgICAgICAgICAgICAgICAgICAgTW9kdWxlLl9mcmVlKHB0cik7CiAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybiBbMiAvKnJldHVybiovLCB0cnVlXTsKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICBjYXNlIDg6CiAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICBsb2FkQ2hlY2soKTsKICAgICAgICAgICAgICAgICAgICAgICAgYXJncyA9IG1zZy5hcmdzOwogICAgICAgICAgICAgICAgICAgICAgICBwdHIgPSBhcmdzWzBdOwogICAgICAgICAgICAgICAgICAgICAgICBieXRlcyA9IGFyZ3NbMV07CiAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybiBbMiAvKnJldHVybiovLCBuZXcgSW50OEFycmF5KE1vZHVsZS5IRUFQOC5zdWJhcnJheShwdHIsIHB0ciArIGJ5dGVzKSldOwogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIGNhc2UgOToKICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgIHRocm93IG5ldyBFcnJvcigiVW5rbm93biBNZXNzYWdlLiIpOwogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIGNhc2UgMTA6IHJldHVybiBbMiAvKnJldHVybiovXTsKICAgICAgICAgICAgfQogICAgICAgIH0pOwogICAgfSk7IH0pOwoKfSkoKTsKLy8jIHNvdXJjZU1hcHBpbmdVUkw9d2FzbS53b3JrZXIuanMubWFwCgo=', null, false);
         var QuickWebAssemblyFactory =  (function () {
             function QuickWebAssemblyFactory() {
             }
-            QuickWebAssemblyFactory.prototype.greet = function () {
-                return "hello world";
-            };
             QuickWebAssemblyFactory.prototype.createManager = function (moduleUrl, wasmUrl) {
                 return __awaiter(this, void 0, void 0, function () {
                     var TransformUrl, msg, worker, promiseWorker$1, manager, keys;
@@ -983,35 +1096,35 @@
     });
     var dist_1 = dist.QuickWebAssemblyFactory;
 
-    var require_context_module_0_1 = spec("npm link test", function() {
+    var require_context_module_0_1 = simpSpec_2("npm link test", function() {
         let fibManager;
-        beforeAll(async done => {
+        simpSpec_4(async done => {
             fibManager = await new dist_1().createManager(`${TEST_CONFIG.assetsPath}/fib.js`, `${TEST_CONFIG.assetsPath}/fib.wasm`);
             done();
         });
-        it("basic use", async done => {
+        simpSpec_1("basic use", async done => {
             chai_1(await fibManager.fib(12)).eq(233);
             done();
         });
     });
 
-    var require_context_module_0_2 = spec("spec util self test", function() {
+    var require_context_module_0_2 = simpSpec_2("spec util self test", function() {
       let beforeAllCount = 0;
       let afterAllCount = 0;
       let itCount = 0;
-      beforeAll(async done => {
+      simpSpec_4(async done => {
         chai_1(beforeAllCount).eq(0);
         await new Promise(res => setTimeout(res, 10));
         beforeAllCount++;
         done();
       });
-      it("should pass", async done => {
+      simpSpec_1("should pass", async done => {
         chai_1(beforeAllCount).eq(1);
         chai_1(afterAllCount).eq(0);
         itCount++;
         done();
       });
-      it("should pass Promise Test", async done => {
+      simpSpec_1("should pass Promise Test", async done => {
         chai_1(beforeAllCount).eq(1);
         chai_1(afterAllCount).eq(0);
         let promisePass = false;
@@ -1025,7 +1138,7 @@
         itCount++;
         done();
       });
-      afterAll(done => {
+      simpSpec_5(done => {
         chai_1(beforeAllCount).eq(1);
         chai_1(afterAllCount).eq(0);
         chai_1(itCount).eq(2);
@@ -1044,22 +1157,22 @@
         return TestClass;
     }());
 
-    var require_context_module_0_3 = spec("test-class", function() {
+    var require_context_module_0_3 = simpSpec_2("test-class", function() {
       let testObj;
-      beforeAll(done => {
+      simpSpec_4(done => {
         testObj = new TestClass("123");
         done();
       });
-      it("class constructor", done => {
+      simpSpec_1("class constructor", done => {
         chai_1(testObj._name === "123").ok;
         done();
       });
-      it("setName", done => {
+      simpSpec_1("setName", done => {
         testObj.setName("krits");
         chai_1(testObj._name === "krits").ok;
         done();
       });
-      it("Promise Test", async done => {
+      simpSpec_1("Promise Test", async done => {
         let promisePass = false;
         await new Promise(res => {
           setTimeout(() => {
@@ -1070,7 +1183,7 @@
         chai_1(promisePass).true;
         done();
       });
-      afterAll(done => {
+      simpSpec_5(done => {
         done();
       });
     });
@@ -1094,10 +1207,12 @@
     ;
     const keys = files.keys();
     async function config$1() {
+      const res = [];
       for (const key of keys) {
         const specModule = await files(key);
-        specModule();
+        res.push(specModule);
       }
+      return res;
     }
 
     /*!
@@ -5526,13 +5641,13 @@
     };
 
     window.onload = function () { return __awaiter(void 0, void 0, void 0, function () {
-        var result;
+        var cfg, result;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, config$1()];
                 case 1:
-                    _a.sent();
-                    return [4 /*yield*/, runTests()];
+                    cfg = _a.sent();
+                    return [4 /*yield*/, simpSpec_3(cfg)];
                 case 2:
                     result = _a.sent();
                     console.warn(JSON.stringify(result));
