@@ -1,5 +1,7 @@
-import { expect, it, spec, beforeAll, TEST_CONFIG } from "../common";
-import { QuickWebAssemblyFactory } from "quick-wasm-js";
+import { spec, it, beforeAll } from "simp-spec";
+import { expect } from "chai";
+import { TEST_CONFIG } from "../configs/test.config";
+import { QuickWebAssemblyFactory } from "../../src/index";
 
 export default spec("npm link test", function() {
     let fibManager;

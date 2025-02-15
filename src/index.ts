@@ -1,6 +1,10 @@
 import PromiseWorker from "promise-worker";
 import { CmdMessage } from "./message.interface";
-import WasmWorker from 'web-worker:./wasm.worker.ts';
+// @ts-ignore
+// import WasmWorkerURL from './wasm.worker?url&inline';
+// import WasmWorkerURL from './worker?url&inline';
+// import WasmWorker from 'web-worker:./wasm.worker.ts';
+// import WasmWorker from './wasm.worker?worker&inline';
 
 /**
  * WebAssembly 代理对象
@@ -161,7 +165,12 @@ export class QuickWebAssemblyFactory {
         TransformUrl();
         
         let msg: CmdMessage;
-        const worker = new WasmWorker();
+        // const worker = new WasmWorker();
+        // const worker = new Worker(WasmWorkerURL)
+        // const worker = new Worker(new URL('./wasm.worker', import.meta.url), {
+        //     type: 'module',
+        // })
+        const worker = new Worker(new URL('./worker.js', import.meta.url))
         const promiseWorker = new PromiseWorker(worker);
         const manager: QuickWasmManager = {
             createHEAP: async (data: ArrayBuffer): Promise<number> => {

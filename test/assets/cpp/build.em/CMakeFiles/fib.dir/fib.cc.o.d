@@ -1,4 +1,5 @@
-CMakeFiles/fib.dir/fib.cc.o: D:\project\wasm-sdk\test\assets\cpp\fib.cc \
+CMakeFiles/fib.dir/fib.cc.o: \
+  D:\project\quick-wasm-js\test\assets\cpp\fib.cc \
   D:\lib\emsdk\upstream\emscripten\cache\sysroot\include\emscripten.h \
   D:\lib\emsdk\upstream\emscripten\cache\sysroot\include\emscripten\emscripten.h \
   D:\lib\emsdk\upstream\emscripten\cache\sysroot\include\emscripten\em_asm.h \

@@ -4,8 +4,8 @@
 
 
 # Configuration directories and files
-SourceDirectory: D:/project/wasm-sdk/test/assets/cpp
-BuildDirectory: D:/project/wasm-sdk/test/assets/cpp/build.em
+SourceDirectory: D:/project/quick-wasm-js/test/assets/cpp
+BuildDirectory: D:/project/quick-wasm-js/test/assets/cpp/build.em
 
 # Where to place the cost data store
 CostDataFile: 
@@ -27,8 +27,8 @@ SubmitInactivityTimeout:
 NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "C:/Program Files/CMake/bin/cmake.exe" "D:/project/wasm-sdk/test/assets/cpp"
-MakeCommand: C:/Program\ Files/CMake/bin/cmake.exe --build . --config "${CTEST_CONFIGURATION_TYPE}" -- -i
+ConfigureCommand: "C:/msys64/mingw64/bin/cmake.exe" "D:/project/quick-wasm-js/test/assets/cpp"
+MakeCommand: C:/msys64/mingw64/bin/cmake.exe --build . --config "${CTEST_CONFIGURATION_TYPE}" -- -i
 DefaultCTestConfigurationType: Release
 
 # version control
@@ -81,7 +81,7 @@ MemoryCheckCommandOptions:
 MemoryCheckSuppressionFile: 
 
 # Coverage
-CoverageCommand: C:/MinGW/bin/gcov.exe
+CoverageCommand: C:/msys64/mingw64/bin/gcov.exe
 CoverageExtraFlags: -l
 
 # Testing options

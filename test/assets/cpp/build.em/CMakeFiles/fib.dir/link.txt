@@ -1,1 +1,1 @@
-D:\lib\emsdk\upstream\emscripten\em++.bat -Os -sWASM=1 -sEXPORTED_FUNCTIONS=['_malloc','_free'] -sEXPORTED_RUNTIME_METHODS=['UTF8ToString','stringToUTF8'] --no-entry @CMakeFiles\fib.dir\objects1 -o fib.js 
+D:\lib\emsdk\upstream\emscripten\em++.bat -Os -sWASM=1 -sEXPORTED_FUNCTIONS=['_malloc','_free'] -sEXPORTED_RUNTIME_METHODS=['UTF8ToString','stringToUTF8'] --no-entry @CMakeFiles\fib.dir\objects1.rsp -o fib.js 
