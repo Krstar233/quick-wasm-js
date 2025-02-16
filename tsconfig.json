@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "outDir": "./types",
+    "rootDir": "./src",
     "noImplicitAny": true,
     "lib": ["DOM", "ES2015", "WebWorker"],
     "module": "es2020",
@@ -8,10 +9,9 @@
     "importHelpers": true,
     "allowJs": true,
     "moduleResolution": "node",
-    "rootDir": ".",
     "declaration": true,
     "skipLibCheck": true,
-  },  
+  },
   "include": [
     "src/**/*.ts"
   ],

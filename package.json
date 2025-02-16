@@ -1,34 +1,46 @@
 {
-  "name": "quick-wasm-js",
-  "version": "1.0.2-alpha.0",
+  "name": "quick-wasm",
+  "version": "0.0.1",
   "type": "module",
   "description": "A quick webassembly tool",
-  "main": "dist/index.js",
-  "types": "src/index.ts",
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "keywords": [
     "WebAssembly"
   ],
-  "author": "kr_star",
+  "author": "Krstar233",
   "license": "ISC",
   "publishConfig": {
-    "tag": "alpha"
+    "tag": "latest"
   },
   "scripts": {
+    "init": "npm install -g pnpm && pnpm install && npx link",
     "server": "vite --host 0.0.0.0 --port 3000",
     "dev": "vite --host 0.0.0.0 --port 3000 --open ./examples/index.html",
     "test": "vite --host 0.0.0.0 --port 3100 --open ./test/index.html",
     "doc": "typedoc --tsconfig tsconfig.json",
-    "build": "pnpm run build:worker & vite build & pnpm run doc",
+    "build": "vite build & pnpm run build:worker & pnpm run doc",
     "build:worker": "vite build -c vite.config.worker.js"
   },
   "devDependencies": {
     "@types/node": "^18.16.2",
     "chai": "^4.3.7",
+    "link": "^2.1.1",
     "promise-worker": "^2.0.1",
     "simp-spec": "^0.0.1",
     "tslib": "^2.5.0",
     "typedoc": "^0.24.6",
     "typescript": "^5.7.3",
-    "vite": "^6.1.0"
-  }
+    "vite": "^6.1.0",
+    "vite-plugin-dts": "^4.5.0"
+  },
+  "files": [
+    "dist/**",
+    "src/**",
+    "docs/**",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ]
 }

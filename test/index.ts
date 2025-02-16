@@ -4,7 +4,6 @@ import { runTests } from "simp-spec";
 
 window.onload = async () => {
   const cfg = config();
-  console.warn(cfg)
   const result = await runTests(cfg);
   console.warn(JSON.stringify(result));
   document.getElementById("result-panel")!.innerHTML = `<span style="color: ${
