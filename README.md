@@ -58,7 +58,7 @@ import QuickWasm from 'quick-wasm'
 import wasm from 'quick-wasm:./cpp'
 
 const myCpp = await QuickWasm.create(wasm)
-const result = await myCpp.fib(12) // result: 233
+const result = myCpp.fib(12) // result: 233
 ```
 
 ### 2. 通用方式
@@ -115,23 +115,23 @@ const manager = await QuickWasm.create(resource);
 
 开始使用代理对象
 ```js
-console.log(await fibManager.fib(12)) // 输出 233
+console.log(fibManager.fib(12)) // 输出 233
 ```
 
 ### 相关 API
 
 生成的代理对象已经提供几个 API 方便对 WebAssembly 的内存进行操作.
 
-- **createHEAP(data: ArrayBuffer): Promise\<number\>**
+- **createHEAP(data: ArrayBuffer): number**
 
    传入 ArrayBuffer , 返回相应堆的指针.
 
 
-- **freeHEAP(ptr: number): Promise\<boolean\>**
+- **freeHEAP(ptr: number): boolean**
 
    传入堆的指针, 释放内存.
 
-- **getHEAP(ptr: number, bytes: number): Promise\<ArrayBuffer>**
+- **getHEAP(ptr: number, bytes: number): ArrayBuffer**
    
    传入指针和字节数, 获取相应的堆数据以 ArrayBuffer 返回.
 
