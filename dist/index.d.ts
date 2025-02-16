@@ -17,6 +17,8 @@ export default class QuickWebAssemblyFactory {
      * 传入 WebAssembly 资源, 构建代理对象，与 create() 方法不同的是 WebAssmebly 实例将在一个单独 Worker 线程中被创建，因此生成的代理对象上的方法都是异步的
      * @param moduleUrl 由 Emscripten 编译的 JS 文件资源路径, 如果是相对路径则会相对于当前页面的 location 请求资源
      * @param wasmUrl 由 Emscripten 编译的 WebAssembly(.wasm) 文件资源路径, 如果是相对路径则会相对于当前页面的 location 请求资源
+     * @param workerUrl npm 包有提供 worker 文件，在 npm 包目录 dist/worker.js，将该文件部署到 cdn 使用这个方法需传入 worker 文件的 url
+     * @param worker npm 包有提供 worker 文件，在 npm 包目录 dist/worker.js，可以用该文件直接生成一个 Worker 实例传入
      * @returns
      */
     static createInWorker({ moduleUrl, wasmUrl, workerUrl, worker }: {
