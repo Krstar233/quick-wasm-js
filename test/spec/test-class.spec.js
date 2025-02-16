@@ -1,4 +1,5 @@
-import { expect, it, spec, beforeAll, afterAll } from "../common";
+import { spec, it, beforeAll, afterAll } from "simp-spec";
+import { expect } from "chai";
 import { TestClass } from "../util/test-class";
 
 export default spec("test-class", function() {
